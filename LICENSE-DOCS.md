@@ -9,32 +9,34 @@ applies to the **documentation and prose** in this repository. Concretely:
 
 - `README.md`
 - `PROPOSAL.md`
-- `spec/*.md`
-- `docs/*.md`
+- `spec/**/*.md`
+- `docs/**/*.md`
+- `schemas/core/**/*.md`
 - `CONTRIBUTING.md`
 - `SECURITY.md`
 - `LICENSE_OPTIONS.md`, `PUBLISH_CHECKLIST.md`, and this file
-- `examples/synthetic-action/*.md` (explanatory prose accompanying the package)
+- `examples/synthetic-action/**/*.md` (explanatory prose accompanying the package)
 
 Code, JSON Schemas, validation scripts, fixtures, and other technical files are
 licensed separately under the Apache License 2.0. See `LICENSE`.
 
 ## The boundary inside `examples/synthetic-action/`
 
-That directory deliberately mixes both kinds of material, so the split is
-applied by file type rather than by directory:
+Those directories deliberately mix or contain translated documentation, so the
+split is applied by file type rather than by language or directory:
 
 | Path | License | Reason |
 |---|---|---|
 | `examples/synthetic-action/*.json` | Apache-2.0 | Machine-readable data contract instances; reused the same way schema and fixture files are. |
 | `examples/synthetic-action/*.md` | CC BY 4.0 | Explanatory prose about the package. |
 
-This split is exhaustive and has no exceptions: every `.md` file in
-`examples/synthetic-action/` is CC BY 4.0, including files that also describe a
-data contract, and every `.json` file there is Apache-2.0. The distinction is
-made by file extension alone, not by how the content is used. The only thing
-that overrides this table is a file's own `SPDX-License-Identifier` header; if
-a file carries one, that header governs for that file.
+This split is exhaustive and has no exceptions: every `.md` file under the
+documented paths is CC BY 4.0, including English files and their `i18n/zh-CN/`
+mirrors, and every `.json` file under the example path is Apache-2.0. The
+distinction is made by file extension alone, not by language or how the content
+is used. The only thing that overrides this table is a file's own
+`SPDX-License-Identifier` header; if a file carries one, that header governs for
+that file.
 
 Attribution note: attribution under CC BY 4.0 should credit the repository
 (`dlxeva/open-compute-commons`) and should **not** imply endorsement by, or

@@ -1,31 +1,34 @@
-# SYNTHETIC 任务说明（instructions_ref 目标）
+# SYNTHETIC task instructions (target of instructions_ref)
 
-> **本文件是合成演示。** 它被 `task_definition.json` 的 `instructions_ref` 指向，用于说明"冻结的任务语义"在文件层面长什么样。
-> 它**不是**真实任务说明，**没有**真实任务方，**不可**替代真实授权数据下的作业指导。
+> English is the authoritative public version of this document.
+> Chinese mirror: [`examples/synthetic-action/i18n/zh-CN/instructions.md`](i18n/zh-CN/instructions.md).
 
-## 任务目标（synthetic）
+> **This file is a synthetic demonstration.** It is what `instructions_ref` in `task_definition.json` points at, and it illustrates what "frozen task semantics" look like at the file level.
+> It is **not** a real task instruction, there is **no** real task owner, and it **cannot** substitute for working guidance under real authorized data.
 
-为每个 Unit 的输入（`input_ref` 指向的合成占位物）撰写一段客观描述。
+## Task goal (synthetic)
 
-## 输出要求
+Write an objective description for each Unit's input (the synthetic placeholder that `input_ref` points at).
 
-| 项 | 要求 |
+## Output requirements
+
+| Item | Requirement |
 |---|---|
-| 格式 | 单段纯文本，写入 `unit_result.output` |
-| 长度 | 40–200 字符（含端点） |
-| 语气 | 客观描述，MUST NOT 臆造输入中不存在的事实 |
-| 敏感内容 | MUST NOT 含 PII、凭据或 L1+ 敏感内容（红线规则） |
+| Format | A single paragraph of plain text, written into `unit_result.output` |
+| Length | 40–200 characters (inclusive) |
+| Tone | Objective description; MUST NOT invent facts that are not present in the input |
+| Sensitive content | MUST NOT contain PII, credentials or L1+ sensitive content (redline rule) |
 
-## 无法完成时
+## When it cannot be completed
 
-MUST NOT 静默省略。将该 Unit 的 `outcome` 设为 `skipped`，并附 `skip_reason_code`（格式 `E_[A-Z_]+`）。
-Submission MUST 覆盖所属 Shard 的全部 Unit。
+MUST NOT silently omit it. Set that Unit's `outcome` to `skipped` and attach a `skip_reason_code` (format `E_[A-Z_]+`).
+A Submission MUST cover all Units of the Shard it belongs to.
 
-## 返工
+## Rework
 
-若某 Unit 未通过验收，原 Shard 转 `rework_required`，由派生的返工 Shard 承接，且返工 Shard **只含未通过的 Unit**。已产生 CanonicalResult 的 Unit MUST NOT 被重新包含。
+If a Unit fails acceptance, the original Shard moves to `rework_required` and a derived rework Shard takes over, and that rework Shard **contains only the Units that did not pass**. Units that already have a CanonicalResult MUST NOT be re-included.
 
-## 边界
+## Boundary
 
-- 本说明不构成对任何人的义务。
-- 无认领入口、无提交入口、无评审者。本包不可执行。
+- These instructions create no obligation for anyone.
+- There is no claiming entry point, no submission entry point and no reviewer. This package is not executable.

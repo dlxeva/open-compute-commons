@@ -25,7 +25,7 @@ was applied:
 
 | Kind | Files | Applied license |
 |---|---|---|
-| **Documentation / prose** | `README.md`, `PROPOSAL.md`, `spec/*.md`, `docs/*.md`, `CONTRIBUTING.md`, `SECURITY.md`, this file, `PUBLISH_CHECKLIST.md`, `LICENSE-DOCS.md`, `examples/synthetic-action/*.md` | CC BY 4.0 |
+| **Documentation / prose** | `README.md`, `PROPOSAL.md`, `spec/**/*.md`, `docs/**/*.md`, `schemas/core/**/*.md`, `CONTRIBUTING.md`, `SECURITY.md`, this file, `PUBLISH_CHECKLIST.md`, `LICENSE-DOCS.md`, `examples/synthetic-action/**/*.md` | CC BY 4.0 |
 | **Code, schemas, fixtures** | `scripts/*.py`, `schemas/core/*.json`, `conformance/**/*.json`, `examples/synthetic-action/*.json` | Apache-2.0 |
 
 A dual arrangement — one license for prose, one for code — is common for specification repositories.
@@ -86,9 +86,9 @@ has been made, not a menu of choices still open.
 5. **Is licensing across the file boundary clear?** Yes. The boundary is drawn by file extension:
    `*.md` is CC BY 4.0 everywhere, including inside `examples/synthetic-action/`; `*.json` and
    `*.py` are Apache-2.0. Only a file's own SPDX header overrides that.
-6. **Are contributions covered?** **Still open.** `CONTRIBUTING.md` has not yet been reconciled with
-   the applied licenses, and the choice between plain inbound=outbound, a DCO, or a CLA has not been
-   made. This is the main remaining follow-up.
+6. **Are contributions covered?** The applicable file license is stated in `CONTRIBUTING.md`.
+   The choice between plain inbound=outbound, a DCO, or a CLA has not been made. This is the main
+   remaining follow-up.
 7. **Does the owner actually hold the rights?** Resolved for publication purposes: the repository is
    published as `dlxeva/open-compute-commons` and the licenses are applied on that basis.
 
@@ -103,9 +103,9 @@ Done:
 
 Remaining follow-ups:
 
-4. Reconcile `CONTRIBUTING.md` with the applied licenses and state the inbound contribution terms
-   (DCO / CLA / inbound=outbound). Until then, `CONTRIBUTING.md` still carries a stale
-   "license undecided" note that contradicts this record.
+4. State the inbound contribution terms (DCO / CLA / inbound=outbound) in `CONTRIBUTING.md` once a
+   decision is made. The applicable file licenses are already stated there; no license decision is
+   pending.
 5. **Long-term maintenance responsibility is unassigned.** No maintainer has been named, so there is
    currently no one designated to answer license questions, accept a CLA, or relicense. This does not
    affect the licenses already applied, which stand as published.
@@ -122,7 +122,7 @@ resolved.
 | Single vs. dual license | **Dual, split by file type** (decided) — boundary fixed in `README.md` |
 | File boundary (`*.md` vs `*.json` / `*.py`) | **Fixed** (decided) — identical in `README.md`, `LICENSE`, `LICENSE-DOCS.md` |
 | Rights holder | **dlxeva/open-compute-commons** (confirmed) — owner/slug for publication |
-| Inbound contribution terms (DCO / CLA / inbound=outbound) | **Open follow-up** — `CONTRIBUTING.md` not yet reconciled |
+| Inbound contribution terms (DCO / CLA / inbound=outbound) | **Open follow-up** — no DCO, CLA, or inbound=outbound policy has been finalized |
 | Long-term maintenance responsibility | **Open follow-up** — no maintainer named |
 
 The licensing decision itself is closed: the dual arrangement, the file boundary, and the rights

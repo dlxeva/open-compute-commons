@@ -22,8 +22,9 @@ Only these:
    that the current checker fails to catch. Each set needs an `expected.json`.
 4. **The local checker** — `scripts/validate_v02.py`. Bug fixes and honest additions. It must stay
    **Python standard library only**, with no install step and no network access.
-5. **Documentation and translation** — the `spec/` files and the example package are currently in
-   Chinese; English translation is an open item. Corrections to the English documents are welcome.
+5. **Documentation and translation** — the canonical `spec/`, `docs/`, schema README, and example
+   documents are in English; their pre-translation Chinese source is preserved under `i18n/zh-CN/`.
+   Corrections to the English documents and review of the Chinese mirrors are welcome.
 6. **Telling us this is a bad idea** — with a reason. That is a legitimate contribution.
 
 ## What is out of scope
@@ -94,8 +95,9 @@ roster yet (see `PUBLISH_CHECKLIST.md`).
 
 **The repository license is now decided** as a dual-license boundary:
 
-- **Documentation and prose** (e.g. `README.md`, `PROPOSAL.md`, `spec/*.md`, `docs/*.md`,
-  `CONTRIBUTING.md`, `SECURITY.md`) are licensed under **CC BY 4.0** — see
+- **Documentation and prose** (e.g. `README.md`, `PROPOSAL.md`, `spec/**/*.md`, `docs/**/*.md`,
+  `schemas/core/**/*.md`, `examples/synthetic-action/**/*.md`, `CONTRIBUTING.md`, `SECURITY.md`)
+  are licensed under **CC BY 4.0** — see
   [`LICENSE-DOCS.md`](LICENSE-DOCS.md).
 - **Code, JSON Schemas, machine-readable fixtures, and validation scripts** (e.g.
   `schemas/core/*.json`, `conformance/**/*.json`, `examples/synthetic-action/*.json`,

@@ -34,8 +34,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 4163,
-      "sha256": "21d901c10ae12073fd32c1c4aa7dd41c817a23fd0d0641de72ac04d43cb87331"
+      "bytes": 4852,
+      "sha256": "905e71976fe5438cf39e5f905390d67469a0ce1754a4f3b9d663ce7c0d3a9e98"
     },
     {
       "path": "manifest.json",
@@ -69,8 +69,8 @@
     },
     {
       "path": "instructions.md",
-      "bytes": 1313,
-      "sha256": "db259412a6a42cd85da370918d18af12a55ab8fc4bf66c4ba3655dfabf86d4d6"
+      "bytes": 1734,
+      "sha256": "57e49b54892b9c1dc897ad0a7c5f1989524b88a3bd41593d2e5e84f65f832dae"
     }
   ],
   "regenerated_note": "checksums 于仓库重排后重新生成：examples/synthetic-action/ 内的文档与 JSON 曾因目录改名（SCHEMAS/core -> schemas/core、ACTION_PACKAGE_SAMPLE -> examples/synthetic-action）更新过内部路径引用，故 files[].sha256 已重算。对象内部的 content_hash / input_hash 仍为占位零值，未重算，也不应重算——本样例未实现 §4.2 的规范化序列化。"

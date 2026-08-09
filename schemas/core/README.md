@@ -1,51 +1,54 @@
-# schemas/core/ — OCC v0.2 核心对象 Schema
+# schemas/core/ — OCC v0.2 core object schemas
 
-- **状态**：candidate draft，2026-08-09。
-- **对应文档**：`spec/PROTOCOL_v0.2.md`、`spec/TASK_SPLITTING_v0.1.md`、`spec/CONTRIBUTION_v0.1.md`。
+> English is the authoritative public version of this document.
+> Chinese mirror: [`schemas/core/i18n/zh-CN/README.md`](i18n/zh-CN/README.md).
 
-## 范围
+- **Status**: candidate draft, 2026-08-09.
+- **Corresponding documents**: `spec/PROTOCOL_v0.2.md`, `spec/TASK_SPLITTING_v0.1.md`, `spec/CONTRIBUTION_v0.1.md`.
 
-本目录是本仓库中**唯一**的 schema 集合，对应协议 v0.2 的核心对象模型。
+## Scope
 
-早期实验中还存在另一批面向"机构申请与算力分配"的 schema（application / review / allocation /
-execution_record / acceptance_record）及其模拟脚本。它们**未包含在本仓库内**：那部分材料属于
-v0.1 时期的探索，尚未审阅，不适合作为公开讨论的起点。本目录的 schema 与它们互不覆盖。
+This directory is the **only** schema collection in this repository, corresponding to the core object model of protocol v0.2.
 
-## 本目录文件
+Earlier experiments also produced another batch of schemas oriented toward "institutional applications and compute allocation" (application / review / allocation /
+execution_record / acceptance_record) together with their simulation scripts. They are **not included in this repository**: that material belongs to
+the v0.1 period of exploration, has not been reviewed, and is not suitable as a starting point for public discussion. The schemas in this directory do not overlap with them.
 
-| 文件 | 对象 | 角色 |
+## Files in this directory
+
+| File | Object | Role |
 |---|---|---|
-| `action.schema.json` | Action | 行动容器；含 data_policy / execution_policy |
-| `task_definition.schema.json` | TaskDefinition | 冻结的任务语义与 acceptance_policy |
-| `unit.schema.json` | Unit | **验收原子** |
-| `shard.schema.json` | Shard | **认领原子** |
-| `claim.schema.json` | Claim | 租约（lease / timeout） |
-| `attempt.schema.json` | Attempt | **执行计量原子** |
-| `submission.schema.json` | Submission | 交付；含 `definitions/unit_result` |
-| `validation.schema.json` | Validation | 四层验证之一层 |
-| `contribution_record.schema.json` | ContributionRecord | 记账条目 |
-| `event.schema.json` | Event | append-only 状态变更 |
+| `action.schema.json` | Action | Action container; contains data_policy / execution_policy |
+| `task_definition.schema.json` | TaskDefinition | Frozen task semantics and acceptance_policy |
+| `unit.schema.json` | Unit | **Acceptance atom** |
+| `shard.schema.json` | Shard | **Claim atom** |
+| `claim.schema.json` | Claim | Lease (lease / timeout) |
+| `attempt.schema.json` | Attempt | **Execution-metering atom** |
+| `submission.schema.json` | Submission | Delivery; contains `definitions/unit_result` |
+| `validation.schema.json` | Validation | One layer of the four-layer validation |
+| `contribution_record.schema.json` | ContributionRecord | Accounting entry |
+| `event.schema.json` | Event | Append-only state change |
 
-未单独建 schema 的对象：`CanonicalResult`、`Release`、`Dispute` —— 语义已在 `spec/PROTOCOL_v0.2.md` §2.10 / §2.12 / §7 定义，schema 列为 deferred（本轮 fixture 未覆盖其独立校验）。
+Objects with no separate schema: `CanonicalResult`, `Release`, `Dispute` — their semantics are already defined in `spec/PROTOCOL_v0.2.md` §2.10 / §2.12 / §7, and their schemas are listed as deferred (this round's fixtures do not cover validating them separately).
 
-## 校验方式
+## How to validate
 
 ```bash
 python3 scripts/validate_v02.py
 ```
 
-该脚本**只用 Python 标准库**，内置 JSON Schema draft-07 的一个**子集**校验器（支持 type / required / enum / pattern / minimum / maximum / minLength / minItems / additionalProperties / properties / items / $ref 本地引用）。
+That script uses **only the Python standard library** and embeds a **subset** validator for JSON Schema draft-07 (supporting type / required / enum / pattern / minimum / maximum / minLength / minItems / additionalProperties / properties / items / local `$ref` references).
 
-**限制**：不是完整的 draft-07 实现。未实现 `format` 语义校验、`allOf`/`anyOf`/`oneOf`/`not`、远程 `$ref`、`patternProperties` 等。若环境中安装了 `jsonschema`，可另行做完整校验；本仓库**不依赖**它，也**不安装**它。
+**Limitation**: it is not a complete draft-07 implementation. `format` semantic validation, `allOf`/`anyOf`/`oneOf`/`not`, remote `$ref`, `patternProperties` and others are not implemented. If `jsonschema` is installed in the environment, full validation can be run separately; this repository **does not depend on** it and **does not install** it.
 
-## 设计约束（在 schema 中强制）
+## Design constraints (enforced in the schemas)
 
-- `additionalProperties: false` 遍布各对象，用于阻止 `score` / `points` / `rank` / `token_equivalent` 等统一积分与换算字段进入 ContributionRecord。
-- `contributor_ref` / `actor_ref` 使用 `^pseudo-` 模式，阻止邮箱、真名、第三方账号 ID。
-- `execution_policy.account_custody` 为单值枚举 `participant_self_custody`，在结构层面固化"项目不代管账号"。
-- `self_reported` 为常量 `true`，防止自报用量被伪装成已核实计量。
-- 所有对象支持 `synthetic: true` 标记，用于区分演示数据与（尚不存在的）真实数据。
+- `additionalProperties: false` appears throughout the objects, to prevent unified-score and conversion fields such as `score` / `points` / `rank` / `token_equivalent` from entering a ContributionRecord.
+- `contributor_ref` / `actor_ref` use the `^pseudo-` pattern, which blocks email addresses, real names and third-party account IDs.
+- `execution_policy.account_custody` is a single-value enum, `participant_self_custody`, which fixes "the project does not take custody of accounts" at the structural level.
+- `self_reported` is the constant `true`, preventing self-reported usage from being disguised as verified metering.
+- Every object supports a `synthetic: true` marker, used to distinguish demonstration data from real data (which does not yet exist).
 
-## 边界
+## Boundary
 
-这些 schema 是**数据契约候选**。没有任何线上服务消费它们；没有 Control Plane、没有 API、没有 Runner。它们当前的唯一用途是本地文件校验与讨论。
+These schemas are a **candidate data contract**. No live service consumes them; there is no Control Plane, no API and no Runner. Their only current use is local file validation and discussion.
