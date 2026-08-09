@@ -1,0 +1,50 @@
+[
+  {
+    "unit_id": "unit-synthetic-sample-001",
+    "task_definition_id": "td-synthetic-sample-alttext",
+    "input_ref": "synthetic://sample/input/001",
+    "input_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "easy",
+    "synthetic": true,
+    "workload_envelope": {
+      "human_minutes_p50": 3,
+      "human_minutes_p90": 7,
+      "basis": "assumed"
+    },
+    "notes": "SYNTHETIC：占位输入，不指向任何真实文件或外部资源。演示路径中该 Unit 通过验收。"
+  },
+  {
+    "unit_id": "unit-synthetic-sample-002",
+    "task_definition_id": "td-synthetic-sample-alttext",
+    "input_ref": "synthetic://sample/input/002",
+    "input_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "hard",
+    "synthetic": true,
+    "workload_envelope": {
+      "human_minutes_p50": 5,
+      "human_minutes_p90": 12,
+      "basis": "assumed"
+    },
+    "notes": "SYNTHETIC：演示路径中该 Unit 因 E_RULE_LENGTH_OUT_OF_RANGE 未通过，进入 rework shard。"
+  },
+  {
+    "unit_id": "unit-synthetic-sample-003",
+    "task_definition_id": "td-synthetic-sample-alttext",
+    "input_ref": "synthetic://sample/input/003",
+    "input_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "medium",
+    "synthetic": true,
+    "workload_envelope": {
+      "human_minutes_p50": 4,
+      "human_minutes_p90": 9,
+      "basis": "assumed"
+    },
+    "notes": "SYNTHETIC：演示路径中该 Unit 通过验收。"
+  }
+]

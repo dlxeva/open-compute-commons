@@ -1,0 +1,28 @@
+[
+  {
+    "attempt_id": "att-synthetic-dup-1",
+    "claim_id": "claim-synthetic-dup-1",
+    "status": "succeeded",
+    "started_at": "2026-08-09T10:05:00+08:00",
+    "finished_at": "2026-08-09T10:18:00+08:00",
+    "synthetic": true,
+    "execution_environment": "synthetic",
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "1-3"
+    }
+  },
+  {
+    "attempt_id": "att-synthetic-dup-2",
+    "claim_id": "claim-synthetic-dup-2",
+    "status": "succeeded",
+    "started_at": "2026-08-09T10:10:00+08:00",
+    "finished_at": "2026-08-09T10:22:00+08:00",
+    "synthetic": true,
+    "execution_environment": "synthetic",
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "1-3"
+    }
+  }
+]

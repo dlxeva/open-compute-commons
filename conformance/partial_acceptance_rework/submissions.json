@@ -1,0 +1,35 @@
+[
+  {
+    "submission_id": "sub-synthetic-pa-1",
+    "claim_id": "claim-synthetic-pa-1",
+    "shard_id": "shard-synthetic-pa-a",
+    "attempt_ids": ["att-synthetic-pa-1"],
+    "status": "partially_accepted",
+    "submitted_at": "2026-08-09T10:26:00+08:00",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "idempotency_key": "idem-sub-pa-0001",
+    "synthetic": true,
+    "unit_results": [
+      {
+        "unit_id": "unit-synthetic-011",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述一：长度落在 40 至 200 字符区间内，用于演示通过路径的逐 Unit 判定。",
+        "self_audit_checked": true
+      },
+      {
+        "unit_id": "unit-synthetic-012",
+        "outcome": "produced",
+        "output": "太短",
+        "self_audit_checked": true,
+        "notes": "SYNTHETIC：故意过短，触发 E_RULE_LENGTH_OUT_OF_RANGE。"
+      },
+      {
+        "unit_id": "unit-synthetic-013",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述三：同样满足长度区间要求，用于演示同一提交中多个 Unit 可以有不同判定结果。",
+        "self_audit_checked": true
+      }
+    ],
+    "notes": "SYNTHETIC：覆盖 Shard 全部 3 个 Unit；其中 1 个未通过。"
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/contribution_record.schema.json",
+  "title": "OCC ContributionRecord (v0.2 core, candidate draft)",
+  "$comment": "spec/CONTRIBUTION_v0.1.md §4。MUST 引用 confirming_event_id（状态确认后才记账）。additionalProperties:false 用于阻止 score/points/rank/token_equivalent 等统一积分与换算字段。",
+  "type": "object",
+  "required": ["record_id", "action_id", "contributor_ref", "track", "evidence_class", "subject_type", "subject_id", "confirming_event_id", "recorded_at", "status"],
+  "properties": {
+    "record_id": { "type": "string", "pattern": "^cr-[A-Za-z0-9_-]+$" },
+    "action_id": { "type": "string", "pattern": "^act-[A-Za-z0-9_-]+$" },
+    "contributor_ref": {
+      "type": "string",
+      "pattern": "^pseudo-[A-Za-z0-9_-]+$",
+      "$comment": "假名。MUST NOT 为邮箱/真名/第三方账号。"
+    },
+    "track": {
+      "type": "string",
+      "enum": ["R", "E", "Q", "P", "S"],
+      "$comment": "R需求领域 / E执行 / Q质量 / P协议工程 / S资源。轨道间 MUST NOT 有优劣排序或换算。"
+    },
+    "evidence_class": {
+      "type": "string",
+      "enum": ["activity", "quality", "impact"],
+      "$comment": "三类证据 MUST 分开，MUST NOT 合并为单一数字。"
+    },
+    "subject_type": {
+      "type": "string",
+      "enum": ["submission", "validation", "unit", "shard", "task_definition", "dispute", "resource", "protocol_revision"]
+    },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "confirming_event_id": {
+      "type": "string",
+      "pattern": "^evt-[A-Za-z0-9_-]+$",
+      "$comment": "MUST 指向已存在的确认事件。MUST NOT 在 received/validating 阶段预记。"
+    },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["active", "revoked", "superseded"] },
+    "synthetic": { "type": "boolean" },
+    "revocation_reason_code": {
+      "type": "string",
+      "$comment": "status=revoked 时 MUST 填写。撤销 MUST NOT 删除记录。"
+    },
+    "activity_measures": {
+      "type": "object",
+      "properties": {
+        "accepted_units": { "type": "number", "minimum": 0 },
+        "rejected_units": { "type": "number", "minimum": 0 },
+        "skipped_units": { "type": "number", "minimum": 0 },
+        "not_selected_units": {
+          "type": "number",
+          "minimum": 0,
+          "$comment": "replication 中未被采纳者。MUST NOT 视为错误。"
+        },
+        "completed_attempts": { "type": "number", "minimum": 0 },
+        "validations_performed": { "type": "number", "minimum": 0 },
+        "revisions_merged": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "quality_measures": {
+      "type": "object",
+      "required": ["sample_size"],
+      "properties": {
+        "sample_size": {
+          "type": "number",
+          "minimum": 0,
+          "$comment": "MUST 附样本量。样本过小 MUST 标 insufficient_sample 且 MUST NOT 呈现比率。"
+        },
+        "insufficient_sample": { "type": "boolean" },
+        "first_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "l4_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rework_rounds": { "type": "number", "minimum": 0 },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "impact_claim": {
+      "type": "object",
+      "required": ["claimed_by", "statement"],
+      "properties": {
+        "claimed_by": {
+          "type": "string",
+          "$comment": "MUST 为外部主体（需求方/受益方）。MUST NOT 由项目方或参与者自填。"
+        },
+        "statement": { "type": "string" },
+        "claimed_at": { "type": "string", "format": "date-time" },
+        "unclaimed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "self_reported_usage": {
+      "type": "object",
+      "required": ["self_reported"],
+      "properties": {
+        "self_reported": { "type": "boolean", "enum": [true] },
+        "model_calls_range": { "type": "string" },
+        "wall_clock_minutes_range": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,22 @@
+{
+  "action_id": "act-synthetic-alttext-001",
+  "version": "1.0",
+  "status": "executing",
+  "title": "[SYNTHETIC] 公开授权教育插图无障碍描述",
+  "purpose": "合成演示：部分通过与返工路径。非真实公益行动。",
+  "synthetic": true,
+  "created_at": "2026-08-09T09:00:00+08:00",
+  "data_policy": {
+    "sensitivity_level": "L0",
+    "license": "SYNTHETIC-PLACEHOLDER",
+    "authorization_ref": "synthetic://no-real-authorization",
+    "redistribution_allowed": true,
+    "pii_present": false
+  },
+  "execution_policy": {
+    "execution_locus": "participant_self_controlled",
+    "third_party_inference_possible": true,
+    "account_custody": "participant_self_custody",
+    "usage_reporting": "coarse_range"
+  }
+}

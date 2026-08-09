@@ -1,0 +1,93 @@
+{
+  "manifest_version": "0.1",
+  "package_id": "acpkg-synthetic-sample-001",
+  "package_version": "1.0",
+  "synthetic": true,
+  "status": "sample_only",
+  "generated_at": "2026-08-09T10:00:00+08:00",
+  "protocol_ref": "PROTOCOL_v0.2.md",
+  "protocol_version": "0.2-candidate-draft",
+  "schema_dir_ref": "schemas/core/",
+  "action_id": "act-synthetic-sample-001",
+  "task_definition_ids": ["td-synthetic-sample-alttext"],
+  "unit_ids": [
+    "unit-synthetic-sample-001",
+    "unit-synthetic-sample-002",
+    "unit-synthetic-sample-003"
+  ],
+  "shard_ids": [
+    "shard-synthetic-sample-a",
+    "shard-synthetic-sample-a-rework-1"
+  ],
+  "contents": [
+    {
+      "path": "README.md",
+      "role": "package_readme",
+      "format": "markdown",
+      "validated_against": null
+    },
+    {
+      "path": "manifest.json",
+      "role": "manifest",
+      "format": "json",
+      "validated_against": null
+    },
+    {
+      "path": "action.json",
+      "role": "action",
+      "format": "json",
+      "validated_against": "schemas/core/action.schema.json"
+    },
+    {
+      "path": "task_definition.json",
+      "role": "task_definition",
+      "format": "json",
+      "validated_against": "schemas/core/task_definition.schema.json"
+    },
+    {
+      "path": "units.json",
+      "role": "unit_array",
+      "format": "json",
+      "validated_against": "schemas/core/unit.schema.json"
+    },
+    {
+      "path": "shards.json",
+      "role": "shard_array",
+      "format": "json",
+      "validated_against": "schemas/core/shard.schema.json"
+    },
+    {
+      "path": "acceptance_policy.json",
+      "role": "acceptance_policy_readable_copy",
+      "format": "json",
+      "validated_against": null
+    },
+    {
+      "path": "instructions.md",
+      "role": "instructions",
+      "format": "markdown",
+      "validated_against": null
+    },
+    {
+      "path": "checksums.json",
+      "role": "integrity_manifest",
+      "format": "json",
+      "validated_against": null
+    }
+  ],
+  "declarations": {
+    "executable_code_present": false,
+    "external_links_present": false,
+    "real_authorized_data_present": false,
+    "public_benefit_output_present": false,
+    "network_access_required": false,
+    "sensitivity_level": "L0",
+    "pii_present": false
+  },
+  "boundaries": [
+    "本包为 synthetic 演示，MUST NOT 被当作真实 Pilot 成果或公益产出。",
+    "本包 MUST NOT 替代真实授权数据下的作业指导。",
+    "无 Control Plane、无 API、无 Runner 消费本包；它当前只是一组本地文件。",
+    "本包不含可执行代码；完整性检查脚本 MUST NOT 放入本目录。"
+  ]
+}

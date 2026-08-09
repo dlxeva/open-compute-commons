@@ -1,0 +1,55 @@
+{
+  "policy_ref": "examples/synthetic-action/acceptance_policy.json",
+  "task_definition_id": "td-synthetic-sample-alttext",
+  "task_definition_version": "1.0",
+  "synthetic": true,
+  "note": "SYNTHETIC。本文件是 task_definition.json 内 acceptance_policy 字段的独立可读副本，便于评审阅读。二者 MUST 一致；若不一致，以 task_definition.json 为准（它才是被 content_hash 覆盖的冻结对象）。本文件自身不是 schemas/core/ 中的独立 schema 对象。",
+  "acceptance_policy": {
+    "rules": [
+      {
+        "id": "schema_shape",
+        "layer": "L1_schema",
+        "rule": "unit_result MUST 符合 submission.schema.json#/definitions/unit_result；outcome=skipped MUST 附 skip_reason_code",
+        "error_code": "E_SCHEMA_INVALID",
+        "redline": false
+      },
+      {
+        "id": "len",
+        "layer": "L2_rule",
+        "rule": "output 长度 MUST 在 40-200 字符之间（含端点）",
+        "error_code": "E_RULE_LENGTH_OUT_OF_RANGE",
+        "redline": false
+      },
+      {
+        "id": "no_sensitive",
+        "layer": "L2_rule",
+        "rule": "output MUST NOT 含 L1+ 敏感内容、PII 或凭据",
+        "error_code": "E_REDLINE_SENSITIVE_DATA",
+        "redline": true
+      },
+      {
+        "id": "human_spotcheck",
+        "layer": "L4_human",
+        "rule": "人工抽检确认描述与输入一致且无臆造事实",
+        "error_code": "E_HUMAN_REJECTED",
+        "redline": false
+      }
+    ],
+    "combination_rule": "all_layers_must_pass",
+    "consensus_rule": "human_arbitration",
+    "l4_sample_ratio": 1.0,
+    "max_rework_rounds": 2,
+    "rework_open_to": "anyone"
+  },
+  "layer_semantics": {
+    "L1_schema": "结构校验。可由标准库静态执行。",
+    "L2_rule": "确定性规则校验。可由标准库静态执行。",
+    "L3_crosscheck": "本样例未启用（replication_factor=1，无交叉比对）。",
+    "L4_human": "人工判断。当前无人工评审流程、无评审者、无仲裁机制——本层在样例中仅为声明，未执行。"
+  },
+  "unimplemented": [
+    "L3_crosscheck 未启用",
+    "L4_human 无实际评审者与仲裁流程",
+    "无验证服务消费本策略；判定结果为文档中的手工推演，不是程序输出"
+  ]
+}

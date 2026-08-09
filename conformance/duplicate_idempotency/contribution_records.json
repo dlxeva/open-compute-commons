@@ -1,0 +1,46 @@
+[
+  {
+    "record_id": "cr-synthetic-dup-0001",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-alpha",
+    "track": "E",
+    "evidence_class": "activity",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-1",
+    "confirming_event_id": "evt-synthetic-dup-002",
+    "recorded_at": "2026-08-09T10:42:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "activity_measures": {
+      "accepted_units": 1,
+      "completed_attempts": 1
+    },
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "1-3"
+    },
+    "notes": "SYNTHETIC：重复提交 sub-2 命中同 idempotency_key，MUST NOT 产生第二条 ContributionRecord。pseudo-alpha 在 E 轨道仅此 1 条 active。"
+  },
+  {
+    "record_id": "cr-synthetic-dup-0002",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-beta",
+    "track": "E",
+    "evidence_class": "activity",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-3",
+    "confirming_event_id": "evt-synthetic-dup-004",
+    "recorded_at": "2026-08-09T10:47:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "activity_measures": {
+      "accepted_units": 1,
+      "completed_attempts": 1
+    },
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "1-3"
+    },
+    "notes": "SYNTHETIC：replication 第二份独立结果（不同 contributor、不同 key），合法，产生独立 ContributionRecord，与 idempotency 去重区分。"
+  }
+]

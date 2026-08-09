@@ -1,0 +1,77 @@
+{
+  "checksums_version": "0.1",
+  "package_id": "acpkg-synthetic-sample-001",
+  "package_version": "1.0",
+  "synthetic": true,
+  "algorithm": "sha256",
+  "encoding": "raw file bytes",
+  "generated_at": "2026-08-09T10:00:00+08:00",
+  "scope": "examples/synthetic-action/ 目录内除 checksums.json 自身外的全部文件。路径相对于本目录。",
+  "self_excluded": "checksums.json",
+  "verification_note": "这些是对文件字节真实计算的 sha256，可用 Python 标准库 hashlib 重算核对。见 README.md「完整性核对」。",
+  "placeholder_note": "区别于此：各 JSON 对象内部的 content_hash / input_hash 字段全部为 64 个 0，是演示占位，不是真实计算值。spec/PROTOCOL_v0.2.md §4.2 要求对规范化序列化计算 content_hash，本样例未实现该规范化过程。",
+  "placeholder_fields": [
+    {
+      "field": "content_hash",
+      "files": [
+        "action.json",
+        "task_definition.json",
+        "units.json",
+        "shards.json"
+      ],
+      "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "real": false
+    },
+    {
+      "field": "input_hash",
+      "files": [
+        "units.json"
+      ],
+      "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "real": false
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4163,
+      "sha256": "21d901c10ae12073fd32c1c4aa7dd41c817a23fd0d0641de72ac04d43cb87331"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 2631,
+      "sha256": "87c162e587c8ed4638c267e935287eeb780023a895a7e1e093fed0a603207937"
+    },
+    {
+      "path": "action.json",
+      "bytes": 1712,
+      "sha256": "5f082080566bbfba7fc0d761f41f8d12e9cb9078b8cd73877f74c4beff747280"
+    },
+    {
+      "path": "task_definition.json",
+      "bytes": 2195,
+      "sha256": "cf8b963dc20163203fa34e9981bd567a3109abee774c2cb3bf568d001fd73ace"
+    },
+    {
+      "path": "units.json",
+      "bytes": 1970,
+      "sha256": "ae2b2b5b6eb21ca2f3f51641ba3956998aba4464f5124f3016695b2d9d97ce2e"
+    },
+    {
+      "path": "shards.json",
+      "bytes": 1528,
+      "sha256": "63d843494fe3e38cc039432d22a212e9bc348dbb63f7c95abce9951dcf7e10b1"
+    },
+    {
+      "path": "acceptance_policy.json",
+      "bytes": 2285,
+      "sha256": "9e21a7ef52ea4e7dd0eab0270d22428006459dc1eb03cedb176d9801b2e3d6b4"
+    },
+    {
+      "path": "instructions.md",
+      "bytes": 1313,
+      "sha256": "db259412a6a42cd85da370918d18af12a55ab8fc4bf66c4ba3655dfabf86d4d6"
+    }
+  ],
+  "regenerated_note": "checksums 于仓库重排后重新生成：examples/synthetic-action/ 内的文档与 JSON 曾因目录改名（SCHEMAS/core -> schemas/core、ACTION_PACKAGE_SAMPLE -> examples/synthetic-action）更新过内部路径引用，故 files[].sha256 已重算。对象内部的 content_hash / input_hash 仍为占位零值，未重算，也不应重算——本样例未实现 §4.2 的规范化序列化。"
+}

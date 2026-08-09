@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/event.schema.json",
+  "title": "OCC Event (v0.2 core, candidate draft)",
+  "$comment": "append-only 状态变更记录。spec/PROTOCOL_v0.2.md §2.13 / §9.4。MUST NOT 包含凭据、完整对话记录或未经同意的 PII。",
+  "type": "object",
+  "required": ["event_id", "event_type", "subject_type", "subject_id", "occurred_at"],
+  "properties": {
+    "event_id": { "type": "string", "pattern": "^evt-[A-Za-z0-9_-]+$" },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z_]+$",
+      "$comment": "形如 submission.accepted / claim.expired / task_definition.frozen。"
+    },
+    "subject_type": {
+      "type": "string",
+      "enum": ["action", "task_definition", "unit", "shard", "claim", "attempt", "submission", "validation", "canonical_result", "contribution_record", "release", "dispute", "resource", "protocol_revision"]
+    },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "synthetic": { "type": "boolean" },
+    "action_id": { "type": "string", "pattern": "^act-[A-Za-z0-9_-]+$" },
+    "actor_ref": {
+      "type": "string",
+      "$comment": "假名或系统标识。MUST NOT 为邮箱/真名/第三方账号。"
+    },
+    "from_status": { "type": "string" },
+    "to_status": { "type": "string" },
+    "reason_code": { "type": "string" },
+    "error_codes": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^E_[A-Z_]+$" }
+    },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

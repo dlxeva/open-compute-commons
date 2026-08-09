@@ -1,0 +1,29 @@
+[
+  {
+    "unit_id": "unit-synthetic-011",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/011",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "easy",
+    "synthetic": true
+  },
+  {
+    "unit_id": "unit-synthetic-012",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/012",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "hard",
+    "synthetic": true
+  },
+  {
+    "unit_id": "unit-synthetic-013",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/013",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "medium",
+    "synthetic": true
+  }
+]

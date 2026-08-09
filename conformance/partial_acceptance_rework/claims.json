@@ -1,0 +1,12 @@
+[
+  {
+    "claim_id": "claim-synthetic-pa-1",
+    "shard_id": "shard-synthetic-pa-a",
+    "contributor_ref": "pseudo-alpha",
+    "status": "closed",
+    "leased_at": "2026-08-09T10:00:00+08:00",
+    "lease_expires_at": "2026-08-09T11:00:00+08:00",
+    "idempotency_key": "idem-claim-pa-0001",
+    "synthetic": true
+  }
+]

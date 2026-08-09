@@ -1,0 +1,11 @@
+{
+  "fixture_set": "valid",
+  "synthetic": true,
+  "description": "完整合规路径：Action → TaskDefinition(frozen) → Units → Shard → Claim → Attempt → Submission(accepted) → Validations(L1-L4 pass) → ContributionRecord。全部对象应通过 schema 与状态检查。",
+  "expect": {
+    "schema_errors": 0,
+    "state_errors": 0,
+    "invariant_errors": 0,
+    "expected_error_codes": []
+  }
+}

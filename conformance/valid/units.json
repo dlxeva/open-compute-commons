@@ -1,0 +1,22 @@
+[
+  {
+    "unit_id": "unit-synthetic-001",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/001",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "easy",
+    "synthetic": true,
+    "workload_envelope": { "human_minutes_p50": 2, "human_minutes_p90": 5, "basis": "assumed" }
+  },
+  {
+    "unit_id": "unit-synthetic-002",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/002",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "medium",
+    "synthetic": true,
+    "workload_envelope": { "human_minutes_p50": 4, "human_minutes_p90": 9, "basis": "assumed" }
+  }
+]

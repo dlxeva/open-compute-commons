@@ -1,0 +1,22 @@
+[
+  {
+    "claim_id": "claim-synthetic-dup-1",
+    "shard_id": "shard-synthetic-dup-a",
+    "contributor_ref": "pseudo-alpha",
+    "status": "closed",
+    "leased_at": "2026-08-09T10:00:00+08:00",
+    "lease_expires_at": "2026-08-09T11:00:00+08:00",
+    "idempotency_key": "idem-claim-dup-0001",
+    "synthetic": true
+  },
+  {
+    "claim_id": "claim-synthetic-dup-2",
+    "shard_id": "shard-synthetic-dup-a",
+    "contributor_ref": "pseudo-beta",
+    "status": "closed",
+    "leased_at": "2026-08-09T10:05:00+08:00",
+    "lease_expires_at": "2026-08-09T11:05:00+08:00",
+    "idempotency_key": "idem-claim-dup-0002",
+    "synthetic": true
+  }
+]

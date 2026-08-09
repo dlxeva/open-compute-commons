@@ -1,0 +1,30 @@
+[
+  {
+    "submission_id": "sub-synthetic-valid-1",
+    "claim_id": "claim-synthetic-valid-1",
+    "shard_id": "shard-synthetic-valid-a",
+    "attempt_ids": ["att-synthetic-valid-1"],
+    "status": "accepted",
+    "submitted_at": "2026-08-09T10:20:00+08:00",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "idempotency_key": "idem-sub-valid-0001",
+    "synthetic": true,
+    "unit_results": [
+      {
+        "unit_id": "unit-synthetic-001",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述文本，用于演示结构，不是真实无障碍描述内容，长度仅供校验演示使用。",
+        "output_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "self_audit_checked": true
+      },
+      {
+        "unit_id": "unit-synthetic-002",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述文本第二条，同样仅用于演示 unit_result 结构与逐 Unit 判定流程。",
+        "output_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "self_audit_checked": true
+      }
+    ],
+    "notes": "SYNTHETIC：覆盖 Shard 全部 Unit。"
+  }
+]

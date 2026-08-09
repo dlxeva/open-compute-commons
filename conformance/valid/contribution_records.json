@@ -1,0 +1,42 @@
+[
+  {
+    "record_id": "cr-synthetic-valid-0001",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-alpha",
+    "track": "E",
+    "evidence_class": "activity",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-valid-1",
+    "confirming_event_id": "evt-synthetic-valid-004",
+    "recorded_at": "2026-08-09T10:43:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "activity_measures": {
+      "accepted_units": 2,
+      "rejected_units": 0,
+      "completed_attempts": 1
+    },
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "1-3"
+    },
+    "notes": "SYNTHETIC：记账发生在 submission.accepted 之后，引用该确认事件。"
+  },
+  {
+    "record_id": "cr-synthetic-valid-0002",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-reviewer-1",
+    "track": "Q",
+    "evidence_class": "activity",
+    "subject_type": "validation",
+    "subject_id": "val-synthetic-valid-l4",
+    "confirming_event_id": "evt-synthetic-valid-004",
+    "recorded_at": "2026-08-09T10:43:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "activity_measures": {
+      "validations_performed": 1
+    },
+    "notes": "SYNTHETIC：Q 轨道；验收者非提交者本人。"
+  }
+]

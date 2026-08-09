@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/submission.schema.json",
+  "title": "OCC Submission (v0.2 core, candidate draft)",
+  "$comment": "spec/PROTOCOL_v0.2.md §2.8 / §3.4。提交后 MUST 不可变；修正 MUST 通过新 submission_id。MUST 覆盖对应 Shard 全部 Unit（未完成者显式 skipped）。",
+  "type": "object",
+  "required": ["submission_id", "claim_id", "unit_results", "status", "submitted_at", "content_hash", "idempotency_key"],
+  "properties": {
+    "submission_id": { "type": "string", "pattern": "^sub-[A-Za-z0-9_-]+$" },
+    "claim_id": { "type": "string", "pattern": "^claim-[A-Za-z0-9_-]+$" },
+    "shard_id": { "type": "string", "pattern": "^shard-[A-Za-z0-9_-]+$" },
+    "attempt_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^att-[A-Za-z0-9_-]+$" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["received", "validating", "accepted", "partially_accepted", "rejected", "needs_rework", "duplicate", "invalid", "disputed", "withdrawn"]
+    },
+    "submitted_at": { "type": "string", "format": "date-time" },
+    "content_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "idempotency_key": { "type": "string", "minLength": 8 },
+    "synthetic": { "type": "boolean" },
+    "late": {
+      "type": "boolean",
+      "$comment": "租约到期后提交。MUST 标注，MUST NOT 因此丢弃。"
+    },
+    "duplicate_of": { "type": "string", "pattern": "^sub-[A-Za-z0-9_-]+$" },
+    "status_reason_code": { "type": "string", "pattern": "^E_[A-Z_]+$" },
+    "unit_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/unit_result" }
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "unit_result": {
+      "type": "object",
+      "required": ["unit_id", "outcome"],
+      "properties": {
+        "unit_id": { "type": "string", "pattern": "^unit-[A-Za-z0-9_-]+$" },
+        "outcome": {
+          "type": "string",
+          "enum": ["produced", "skipped"],
+          "$comment": "skipped MUST 附 skip_reason_code；不允许静默缺失。"
+        },
+        "output": { "type": "string" },
+        "output_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "skip_reason_code": { "type": "string", "pattern": "^E_[A-Z_]+$" },
+        "self_audit_checked": {
+          "type": "boolean",
+          "$comment": "参与者自审计确认：交付前对照验收清单逐项确认。"
+        },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

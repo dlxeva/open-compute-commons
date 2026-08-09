@@ -1,0 +1,12 @@
+{
+  "fixture_set": "invalid_redline",
+  "synthetic": true,
+  "negative_test": true,
+  "description": "红线/非法字段负向测试：一个 ContributionRecord 故意缺少必填字段 confirming_event_id，并携带被禁止的字段 score/points（统一积分换算字段，contribution_record.schema.json additionalProperties:false 应拒绝）。实际校验捕获 3 个 schema 错误（缺 confirming_event_id、score、points）+ 1 个 invariant 错误（缺 confirming_event_id）。注意：本 fixture 不验证、也未实现非法状态迁移检查——校验器的 state_errors 恒为 0，状态机迁移路径未被代码检查。本 fixture 仅用于验证文件级红线字段校验，MUST NOT 进入任何真实成果/贡献叙述。",
+  "expect": {
+    "schema_errors": 3,
+    "state_errors": 0,
+    "invariant_errors": 1,
+    "expected_error_codes": ["E_SCHEMA_EXTRA_FIELD", "E_INV_MISSING_CONFIRMING_EVENT"]
+  }
+}

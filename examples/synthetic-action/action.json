@@ -1,0 +1,32 @@
+{
+  "action_id": "act-synthetic-sample-001",
+  "version": "1.0",
+  "status": "executing",
+  "title": "[SYNTHETIC] 样例 Action Package —— 合成图示无障碍描述",
+  "purpose": "合成演示：展示 Action / TaskDefinition / Unit / Shard / 返工分片 / 完整性清单的字段形态。非真实公益行动，不产生任何真实成果。",
+  "synthetic": true,
+  "created_at": "2026-08-09T10:00:00+08:00",
+  "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "requester_ref": "synthetic://no-real-requester",
+  "coordinator_ref": "synthetic://no-real-coordinator",
+  "result_license": "SYNTHETIC-PLACEHOLDER",
+  "acceptance_policy_ref": "examples/synthetic-action/acceptance_policy.json",
+  "data_policy": {
+    "sensitivity_level": "L0",
+    "license": "SYNTHETIC-PLACEHOLDER",
+    "authorization_ref": "synthetic://no-real-authorization",
+    "redistribution_allowed": true,
+    "pii_present": false,
+    "retention_policy": "SYNTHETIC：本地文件，无服务端留存，无删除请求通道。",
+    "egress_constraints": "SYNTHETIC：样例内容全部为占位字符串，不含需要出境管制的数据。"
+  },
+  "execution_policy": {
+    "execution_locus": "participant_self_controlled",
+    "third_party_inference_possible": true,
+    "account_custody": "participant_self_custody",
+    "allowed_tooling": ["participant_own_tooling"],
+    "reproducibility_requirements": "SYNTHETIC：无强制复现要求；样例不执行。",
+    "usage_reporting": "coarse_range"
+  },
+  "notes": "SYNTHETIC。项目 MUST NOT 代管账号；参与者自行确认第三方服务条款与额度。本 Action 未开放认领，无参与者，无提交。"
+}

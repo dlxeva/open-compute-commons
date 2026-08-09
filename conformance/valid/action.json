@@ -1,0 +1,30 @@
+{
+  "action_id": "act-synthetic-alttext-001",
+  "version": "1.0",
+  "status": "executing",
+  "title": "[SYNTHETIC] 公开授权教育插图无障碍描述",
+  "purpose": "合成演示：为假设的公开授权教育插图生成无障碍描述。非真实公益行动。",
+  "synthetic": true,
+  "created_at": "2026-08-09T09:00:00+08:00",
+  "requester_ref": "synthetic-requester-placeholder",
+  "coordinator_ref": "pseudo-coordinator",
+  "result_license": "SYNTHETIC-PLACEHOLDER",
+  "data_policy": {
+    "sensitivity_level": "L0",
+    "license": "SYNTHETIC-PLACEHOLDER",
+    "authorization_ref": "synthetic://no-real-authorization",
+    "redistribution_allowed": true,
+    "pii_present": false,
+    "retention_policy": "参与者本地不留存输入副本",
+    "egress_constraints": "仅限参与者自选的第三方模型服务；条款由参与者自行确认"
+  },
+  "execution_policy": {
+    "execution_locus": "participant_self_controlled",
+    "third_party_inference_possible": true,
+    "account_custody": "participant_self_custody",
+    "allowed_tooling": ["web", "cli"],
+    "reproducibility_requirements": "记录模型能力等级，不记录账号",
+    "usage_reporting": "coarse_range"
+  },
+  "notes": "SYNTHETIC fixture；无真实需求方、无真实授权、非 Pilot 成果。"
+}

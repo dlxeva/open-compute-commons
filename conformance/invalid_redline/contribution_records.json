@@ -1,0 +1,17 @@
+[
+  {
+    "record_id": "cr-synthetic-bad-0001",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-alpha",
+    "track": "E",
+    "evidence_class": "activity",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-never-existed",
+    "recorded_at": "2026-08-09T10:00:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "score": 87,
+    "points": 431,
+    "notes": "SYNTHETIC 故意违规：携带 score/points 等统一积分换算字段（contribution_record.schema.json additionalProperties:false 应拒），且无 confirming_event_id。本记录是负向测试样例，不进入真实贡献叙述。"
+  }
+]

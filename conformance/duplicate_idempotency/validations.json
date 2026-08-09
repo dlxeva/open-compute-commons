@@ -1,0 +1,57 @@
+[
+  {
+    "validation_id": "val-synthetic-dup-l1",
+    "submission_id": "sub-synthetic-dup-1",
+    "layer": "L1_schema",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:21:00+08:00",
+    "synthetic": true,
+    "automated": true,
+    "validator_ref": "tool:validate_v02",
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-021", "verdict": "pass" }
+    ]
+  },
+  {
+    "validation_id": "val-synthetic-dup-l2",
+    "submission_id": "sub-synthetic-dup-1",
+    "layer": "L2_rule",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:22:00+08:00",
+    "synthetic": true,
+    "automated": true,
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-021", "verdict": "pass", "redline_hit": false }
+    ]
+  },
+  {
+    "validation_id": "val-synthetic-dup-l4",
+    "submission_id": "sub-synthetic-dup-1",
+    "layer": "L4_human",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:40:00+08:00",
+    "synthetic": true,
+    "automated": false,
+    "validator_ref": "pseudo-reviewer-1",
+    "sample_ratio": 1.0,
+    "extrapolated": false,
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-021", "verdict": "pass" }
+    ]
+  },
+  {
+    "validation_id": "val-synthetic-dup-3-l4",
+    "submission_id": "sub-synthetic-dup-3",
+    "layer": "L4_human",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:45:00+08:00",
+    "synthetic": true,
+    "automated": false,
+    "validator_ref": "pseudo-reviewer-2",
+    "sample_ratio": 1.0,
+    "extrapolated": false,
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-021", "verdict": "pass" }
+    ]
+  }
+]

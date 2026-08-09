@@ -1,0 +1,62 @@
+[
+  {
+    "submission_id": "sub-synthetic-dup-1",
+    "claim_id": "claim-synthetic-dup-1",
+    "shard_id": "shard-synthetic-dup-a",
+    "attempt_ids": ["att-synthetic-dup-1"],
+    "status": "accepted",
+    "submitted_at": "2026-08-09T10:20:00+08:00",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "idempotency_key": "idem-sub-dup-0001",
+    "synthetic": true,
+    "unit_results": [
+      {
+        "unit_id": "unit-synthetic-021",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述一：长度落在 40 至 200 字符区间内，用于演示幂等与重复执行路径。",
+        "self_audit_checked": true
+      }
+    ]
+  },
+  {
+    "submission_id": "sub-synthetic-dup-2",
+    "claim_id": "claim-synthetic-dup-1",
+    "shard_id": "shard-synthetic-dup-a",
+    "attempt_ids": ["att-synthetic-dup-1"],
+    "status": "duplicate",
+    "submitted_at": "2026-08-09T10:25:00+08:00",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "idempotency_key": "idem-sub-dup-0001",
+    "synthetic": true,
+    "duplicate_of": "sub-synthetic-dup-1",
+    "status_reason_code": "E_DUPLICATE_SUBMISSION",
+    "unit_results": [
+      {
+        "unit_id": "unit-synthetic-021",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述一：重复提交，命中同一 idempotency_key，MUST 返回原记录且不产生第二条 ContributionRecord。"
+      }
+    ],
+    "notes": "SYNTHETIC：与 sub-1 同 idempotency_key、同 contributor，MUST 判 duplicate 并引用原记录。"
+  },
+  {
+    "submission_id": "sub-synthetic-dup-3",
+    "claim_id": "claim-synthetic-dup-2",
+    "shard_id": "shard-synthetic-dup-a",
+    "attempt_ids": ["att-synthetic-dup-2"],
+    "status": "accepted",
+    "submitted_at": "2026-08-09T10:30:00+08:00",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "idempotency_key": "idem-sub-dup-0003",
+    "synthetic": true,
+    "unit_results": [
+      {
+        "unit_id": "unit-synthetic-021",
+        "outcome": "produced",
+        "output": "SYNTHETIC 占位描述二：由不同 contributor(pseudo-beta) 与不同 idempotency_key 产生，是 replication 而非 duplicate。",
+        "self_audit_checked": true
+      }
+    ],
+    "notes": "SYNTHETIC：replication_factor=2 下的第二份独立执行，不同 contributor、不同 key，非 duplicate。"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "shard_id": "shard-synthetic-sample-a",
+    "task_definition_id": "td-synthetic-sample-alttext",
+    "task_definition_version": "1.0",
+    "unit_ids": [
+      "unit-synthetic-sample-001",
+      "unit-synthetic-sample-002",
+      "unit-synthetic-sample-003"
+    ],
+    "status": "rework_required",
+    "version": "1.0",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "synthetic": true,
+    "lease_duration_seconds": 3600,
+    "max_concurrent_claims": 1,
+    "replication_factor": 1,
+    "status_reason_code": "partial_acceptance",
+    "notes": "SYNTHETIC 原始 Shard：001 与 003 通过，002 未通过。按 PROTOCOL_v0.2 §3.2，本 Shard MUST NOT 原地重开，转 rework_required 并派生返工 Shard。"
+  },
+  {
+    "shard_id": "shard-synthetic-sample-a-rework-1",
+    "task_definition_id": "td-synthetic-sample-alttext",
+    "task_definition_version": "1.0",
+    "unit_ids": ["unit-synthetic-sample-002"],
+    "status": "open",
+    "version": "1.0",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "synthetic": true,
+    "parent_shard_id": "shard-synthetic-sample-a",
+    "rework_round": 1,
+    "prior_error_codes": ["E_RULE_LENGTH_OUT_OF_RANGE"],
+    "lease_duration_seconds": 3600,
+    "max_concurrent_claims": 1,
+    "replication_factor": 1,
+    "notes": "SYNTHETIC 返工 Shard：MUST 只含未通过的 unit-synthetic-sample-002。001 与 003 已有 CanonicalResult，MUST NOT 重新包含。"
+  }
+]

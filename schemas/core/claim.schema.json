@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/claim.schema.json",
+  "title": "OCC Claim (v0.2 core, candidate draft)",
+  "$comment": "租约。spec/PROTOCOL_v0.2.md §2.6 / §3.3 / §5。contributor_ref MUST 为项目内假名，MUST NOT 为第三方账号或邮箱。",
+  "type": "object",
+  "required": ["claim_id", "shard_id", "contributor_ref", "status", "leased_at", "lease_expires_at", "idempotency_key"],
+  "properties": {
+    "claim_id": { "type": "string", "pattern": "^claim-[A-Za-z0-9_-]+$" },
+    "shard_id": { "type": "string", "pattern": "^shard-[A-Za-z0-9_-]+$" },
+    "contributor_ref": {
+      "type": "string",
+      "pattern": "^pseudo-[A-Za-z0-9_-]+$",
+      "$comment": "假名标识。MUST NOT 为邮箱/真名/第三方账号 ID。"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["requested", "active", "submitted", "closed", "expired", "released", "revoked", "superseded"]
+    },
+    "leased_at": { "type": "string", "format": "date-time" },
+    "lease_expires_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string", "minLength": 8 },
+    "synthetic": { "type": "boolean" },
+    "renewal_count": { "type": "number", "minimum": 0 },
+    "released_at": { "type": "string", "format": "date-time" },
+    "status_reason_code": {
+      "type": "string",
+      "pattern": "^E_[A-Z_]+$",
+      "$comment": "revoked/expired 时 MUST 填写。"
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

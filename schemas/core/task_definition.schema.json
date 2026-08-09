@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/task_definition.schema.json",
+  "title": "OCC TaskDefinition (v0.2 core, candidate draft)",
+  "$comment": "spec/PROTOCOL_v0.2.md §2.3。frozen 后 MUST NOT 原地改语义；改动 MUST 递增 version 并更新 content_hash。",
+  "type": "object",
+  "required": ["task_definition_id", "action_id", "version", "status", "instructions_ref", "output_schema_ref", "acceptance_policy", "content_hash"],
+  "properties": {
+    "task_definition_id": { "type": "string", "pattern": "^td-[A-Za-z0-9_-]+$" },
+    "action_id": { "type": "string", "pattern": "^act-[A-Za-z0-9_-]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "status": { "type": "string", "enum": ["draft", "review", "frozen", "superseded", "retired"] },
+    "synthetic": { "type": "boolean" },
+    "instructions_ref": { "type": "string" },
+    "output_schema_ref": { "type": "string" },
+    "content_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "supersedes": { "type": "string" },
+    "frozen_at": { "type": "string", "format": "date-time" },
+    "acceptance_policy": {
+      "type": "object",
+      "required": ["rules", "combination_rule"],
+      "properties": {
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "layer", "rule"],
+            "properties": {
+              "id": { "type": "string" },
+              "layer": { "type": "string", "enum": ["L1_schema", "L2_rule", "L3_crosscheck", "L4_human"] },
+              "rule": { "type": "string" },
+              "error_code": { "type": "string", "pattern": "^E_[A-Z_]+$" },
+              "redline": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "combination_rule": {
+          "type": "string",
+          "enum": ["all_layers_must_pass", "weighted", "human_final"]
+        },
+        "consensus_rule": {
+          "type": "string",
+          "enum": ["unanimous", "majority", "highest_l3_score", "human_arbitration"],
+          "$comment": "replication_factor>1 时 MUST 显式声明；缺省 MUST 视为 human_arbitration。"
+        },
+        "l4_sample_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "max_rework_rounds": { "type": "number", "minimum": 0 },
+        "rework_open_to": { "type": "string", "enum": ["original_contributor", "anyone", "coordinator_assigned"] }
+      },
+      "additionalProperties": false
+    },
+    "workload_envelope": {
+      "type": "object",
+      "required": ["unit_of_measure"],
+      "properties": {
+        "unit_of_measure": { "type": "string", "enum": ["unit", "shard", "attempt"] },
+        "human_minutes": { "$ref": "#/definitions/estimate" },
+        "model_calls": { "$ref": "#/definitions/estimate" },
+        "expected_attempts_per_claim": { "$ref": "#/definitions/estimate" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "calibration_status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "completed", "unknown"],
+      "$comment": "spec/TASK_SPLITTING_v0.1.md §4。"
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "estimate": {
+      "type": "object",
+      "required": ["basis"],
+      "properties": {
+        "p50": { "type": "number", "minimum": 0 },
+        "p90": { "type": "number", "minimum": 0 },
+        "basis": {
+          "type": "string",
+          "enum": ["measured", "calibrated", "assumed", "unknown"],
+          "$comment": "assumed/unknown MUST 在对外材料中显式说明无实测依据。"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

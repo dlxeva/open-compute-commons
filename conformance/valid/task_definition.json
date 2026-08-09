@@ -1,0 +1,64 @@
+{
+  "task_definition_id": "td-synthetic-alttext",
+  "action_id": "act-synthetic-alttext-001",
+  "version": "1.0",
+  "status": "frozen",
+  "synthetic": true,
+  "instructions_ref": "examples/synthetic-action/instructions.md",
+  "output_schema_ref": "schemas/core/submission.schema.json#/definitions/unit_result",
+  "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "frozen_at": "2026-08-09T09:30:00+08:00",
+  "calibration_status": "not_started",
+  "acceptance_policy": {
+    "rules": [
+      {
+        "id": "len",
+        "layer": "L2_rule",
+        "rule": "描述长度 40-200 字符",
+        "error_code": "E_RULE_LENGTH_OUT_OF_RANGE",
+        "redline": false
+      },
+      {
+        "id": "no_speculation",
+        "layer": "L2_rule",
+        "rule": "不得推测图中未显示的信息",
+        "error_code": "E_RULE_SPECULATION_DETECTED",
+        "redline": false
+      },
+      {
+        "id": "schema_ok",
+        "layer": "L1_schema",
+        "rule": "输出符合 unit_result 结构",
+        "error_code": "E_SCHEMA_MISSING_FIELD",
+        "redline": false
+      },
+      {
+        "id": "no_sensitive",
+        "layer": "L2_rule",
+        "rule": "不得引入 L1+ 敏感内容",
+        "error_code": "E_REDLINE_SENSITIVE_DATA",
+        "redline": true
+      },
+      {
+        "id": "domain_adequacy",
+        "layer": "L4_human",
+        "rule": "教育语境信息充分性由需求方判定",
+        "error_code": "E_HUMAN_DOMAIN_REJECT",
+        "redline": false
+      }
+    ],
+    "combination_rule": "all_layers_must_pass",
+    "consensus_rule": "human_arbitration",
+    "l4_sample_ratio": 0.5,
+    "max_rework_rounds": 2,
+    "rework_open_to": "anyone"
+  },
+  "workload_envelope": {
+    "unit_of_measure": "unit",
+    "human_minutes": { "p50": 3, "p90": 8, "basis": "assumed" },
+    "model_calls": { "p50": 1, "p90": 3, "basis": "assumed" },
+    "expected_attempts_per_claim": { "p50": 1, "p90": 2, "basis": "assumed" },
+    "notes": "SYNTHETIC：全部 assumed，无实测依据"
+  },
+  "notes": "SYNTHETIC fixture。"
+}

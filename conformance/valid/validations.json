@@ -1,0 +1,58 @@
+[
+  {
+    "validation_id": "val-synthetic-valid-l1",
+    "submission_id": "sub-synthetic-valid-1",
+    "layer": "L1_schema",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:21:00+08:00",
+    "synthetic": true,
+    "automated": true,
+    "validator_ref": "tool:validate_v02",
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-001", "verdict": "pass" },
+      { "unit_id": "unit-synthetic-002", "verdict": "pass" }
+    ]
+  },
+  {
+    "validation_id": "val-synthetic-valid-l2",
+    "submission_id": "sub-synthetic-valid-1",
+    "layer": "L2_rule",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:22:00+08:00",
+    "synthetic": true,
+    "automated": true,
+    "validator_ref": "tool:validate_v02",
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-001", "verdict": "pass", "redline_hit": false },
+      { "unit_id": "unit-synthetic-002", "verdict": "pass", "redline_hit": false }
+    ]
+  },
+  {
+    "validation_id": "val-synthetic-valid-l3",
+    "submission_id": "sub-synthetic-valid-1",
+    "layer": "L3_crosscheck",
+    "verdict": "skipped",
+    "decided_at": "2026-08-09T10:23:00+08:00",
+    "synthetic": true,
+    "automated": true,
+    "validator_ref": "tool:validate_v02",
+    "notes": "replication_factor=1 且无 gold set，本层不适用，记 skipped 而非 pass。"
+  },
+  {
+    "validation_id": "val-synthetic-valid-l4",
+    "submission_id": "sub-synthetic-valid-1",
+    "layer": "L4_human",
+    "verdict": "pass",
+    "decided_at": "2026-08-09T10:40:00+08:00",
+    "synthetic": true,
+    "automated": false,
+    "validator_ref": "pseudo-reviewer-1",
+    "sample_ratio": 0.5,
+    "extrapolated": true,
+    "per_unit_verdicts": [
+      { "unit_id": "unit-synthetic-001", "verdict": "pass", "notes": "抽检覆盖" },
+      { "unit_id": "unit-synthetic-002", "verdict": "pass", "notes": "外推，未逐条人工核" }
+    ],
+    "notes": "SYNTHETIC：抽检 50%，其余为外推，已显式标注 extrapolated。"
+  }
+]

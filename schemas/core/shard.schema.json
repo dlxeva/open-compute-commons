@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/shard.schema.json",
+  "title": "OCC Shard (v0.2 core, candidate draft)",
+  "$comment": "认领原子。spec/PROTOCOL_v0.2.md §2.5 / §3.2。返工 Shard MUST 设 parent_shard_id 且 MUST 只含未通过 Unit。",
+  "type": "object",
+  "required": ["shard_id", "task_definition_id", "unit_ids", "status", "version", "content_hash"],
+  "properties": {
+    "shard_id": { "type": "string", "pattern": "^shard-[A-Za-z0-9_-]+$" },
+    "task_definition_id": { "type": "string", "pattern": "^td-[A-Za-z0-9_-]+$" },
+    "task_definition_version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "unit_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^unit-[A-Za-z0-9_-]+$" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "open", "partially_claimed", "fully_claimed", "completed", "blocked", "expired", "rework_required", "retired"]
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "content_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "synthetic": { "type": "boolean" },
+    "lease_duration_seconds": { "type": "number", "minimum": 1 },
+    "max_concurrent_claims": { "type": "number", "minimum": 1 },
+    "replication_factor": { "type": "number", "minimum": 1 },
+    "parent_shard_id": {
+      "type": "string",
+      "pattern": "^shard-[A-Za-z0-9_-]+$",
+      "$comment": "返工分片指向原分片。"
+    },
+    "rework_round": { "type": "number", "minimum": 0 },
+    "prior_error_codes": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^E_[A-Z_]+$" }
+    },
+    "status_reason_code": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/action.schema.json",
+  "title": "OCC Action (v0.2 core, candidate draft)",
+  "$comment": "spec/PROTOCOL_v0.2.md §2.2 / §3.1。候选语义契约，非线上系统。MUST NOT 包含任何凭据或第三方账号标识。",
+  "type": "object",
+  "required": ["action_id", "version", "status", "title", "purpose", "data_policy", "execution_policy", "created_at"],
+  "properties": {
+    "action_id": { "type": "string", "pattern": "^act-[A-Za-z0-9_-]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "open", "executing", "validating", "releasing", "closed", "suspended", "cancelled", "archived"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "synthetic": { "type": "boolean", "description": "true 表示合成演示，非真实行动" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "content_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "requester_ref": { "type": "string", "description": "需求方引用；假名或组织占位符" },
+    "coordinator_ref": { "type": "string" },
+    "result_license": { "type": "string" },
+    "acceptance_policy_ref": { "type": "string" },
+    "status_reason_code": { "type": "string", "description": "suspended/cancelled 时的理由码" },
+    "data_policy": {
+      "type": "object",
+      "required": ["sensitivity_level", "license", "authorization_ref", "redistribution_allowed", "pii_present"],
+      "properties": {
+        "sensitivity_level": { "type": "string", "enum": ["L0", "L1", "L2", "L3"] },
+        "license": { "type": "string" },
+        "authorization_ref": { "type": "string" },
+        "redistribution_allowed": { "type": "boolean" },
+        "pii_present": { "type": "boolean" },
+        "retention_policy": { "type": "string" },
+        "egress_constraints": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "execution_policy": {
+      "type": "object",
+      "required": ["execution_locus", "third_party_inference_possible", "account_custody"],
+      "properties": {
+        "execution_locus": {
+          "type": "string",
+          "enum": ["participant_self_controlled", "institution_controlled"]
+        },
+        "third_party_inference_possible": { "type": "boolean" },
+        "account_custody": {
+          "type": "string",
+          "enum": ["participant_self_custody"],
+          "description": "固定值。项目 MUST NOT 代管账号（PROTOCOL_v0.2 §9.3）。"
+        },
+        "allowed_tooling": { "type": "array", "items": { "type": "string" } },
+        "reproducibility_requirements": { "type": "string" },
+        "usage_reporting": { "type": "string", "enum": ["none", "coarse_range", "per_attempt"] }
+      },
+      "additionalProperties": false
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

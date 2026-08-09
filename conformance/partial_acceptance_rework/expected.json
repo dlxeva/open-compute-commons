@@ -1,0 +1,18 @@
+{
+  "fixture_set": "partial_acceptance_rework",
+  "synthetic": true,
+  "description": "部分通过与返工：Shard 含 3 个 Unit，L2 判定其中 1 个失败。Submission 应为 partially_accepted；返工 Shard 只含失败的 Unit，且设 parent_shard_id；记账只记通过部分。",
+  "expect": {
+    "schema_errors": 0,
+    "state_errors": 0,
+    "invariant_errors": 0,
+    "expected_error_codes": ["E_RULE_LENGTH_OUT_OF_RANGE"],
+    "behaviors": [
+      "submission.status == partially_accepted",
+      "rework shard 只含失败 Unit unit-synthetic-012",
+      "rework shard 设置 parent_shard_id",
+      "rework shard 不含已通过 Unit",
+      "ContributionRecord accepted_units=2 rejected_units=1"
+    ]
+  }
+}

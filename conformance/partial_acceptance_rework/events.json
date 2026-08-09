@@ -1,0 +1,48 @@
+[
+  {
+    "event_id": "evt-synthetic-pa-001",
+    "event_type": "submission.received",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-pa-1",
+    "occurred_at": "2026-08-09T10:26:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "to_status": "received",
+    "idempotency_key": "idem-sub-pa-0001"
+  },
+  {
+    "event_id": "evt-synthetic-pa-002",
+    "event_type": "submission.partially_accepted",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-pa-1",
+    "occurred_at": "2026-08-09T10:51:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "validating",
+    "to_status": "partially_accepted",
+    "error_codes": ["E_RULE_LENGTH_OUT_OF_RANGE"]
+  },
+  {
+    "event_id": "evt-synthetic-pa-003",
+    "event_type": "shard.rework_required",
+    "subject_type": "shard",
+    "subject_id": "shard-synthetic-pa-a",
+    "occurred_at": "2026-08-09T10:52:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "fully_claimed",
+    "to_status": "rework_required",
+    "reason_code": "partial_acceptance"
+  },
+  {
+    "event_id": "evt-synthetic-pa-004",
+    "event_type": "shard.created",
+    "subject_type": "shard",
+    "subject_id": "shard-synthetic-pa-a-rework-1",
+    "occurred_at": "2026-08-09T10:53:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "to_status": "open",
+    "reason_code": "rework_round_1"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "fixture_set": "duplicate_idempotency",
+  "synthetic": true,
+  "description": "幂等与重复：同一 idempotency_key 的第二次提交必须记为 duplicate 并指向原记录，且 MUST NOT 产生第二条 ContributionRecord。另含一条 replication 下的合法第二份提交（不同 key、不同 contributor），用于区分 replication 与 idempotency。",
+  "expect": {
+    "schema_errors": 0,
+    "state_errors": 0,
+    "invariant_errors": 0,
+    "expected_error_codes": ["E_DUPLICATE_SUBMISSION"],
+    "behaviors": [
+      "sub-synthetic-dup-2 status == duplicate 且 duplicate_of == sub-synthetic-dup-1",
+      "重复提交不产生第二条 ContributionRecord（pseudo-alpha 在 E 轨道只有 1 条 active）",
+      "replication 的 sub-synthetic-dup-3 由不同 contributor 与不同 idempotency_key 产生，不是 duplicate",
+      "同一 Unit 至多一条 active CanonicalResult"
+    ]
+  }
+}

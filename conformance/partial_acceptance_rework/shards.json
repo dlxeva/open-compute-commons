@@ -1,0 +1,34 @@
+[
+  {
+    "shard_id": "shard-synthetic-pa-a",
+    "task_definition_id": "td-synthetic-alttext",
+    "task_definition_version": "1.0",
+    "unit_ids": ["unit-synthetic-011", "unit-synthetic-012", "unit-synthetic-013"],
+    "status": "rework_required",
+    "version": "1.0",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "synthetic": true,
+    "lease_duration_seconds": 3600,
+    "max_concurrent_claims": 1,
+    "replication_factor": 1,
+    "status_reason_code": "partial_acceptance",
+    "notes": "SYNTHETIC：unit-012 未通过，本 Shard 转 rework_required，不原地重开。"
+  },
+  {
+    "shard_id": "shard-synthetic-pa-a-rework-1",
+    "task_definition_id": "td-synthetic-alttext",
+    "task_definition_version": "1.0",
+    "unit_ids": ["unit-synthetic-012"],
+    "status": "open",
+    "version": "1.0",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "synthetic": true,
+    "parent_shard_id": "shard-synthetic-pa-a",
+    "rework_round": 1,
+    "prior_error_codes": ["E_RULE_LENGTH_OUT_OF_RANGE"],
+    "lease_duration_seconds": 3600,
+    "max_concurrent_claims": 1,
+    "replication_factor": 1,
+    "notes": "SYNTHETIC：只含失败 Unit。unit-011 与 unit-013 已有 CanonicalResult，MUST NOT 重新包含。"
+  }
+]

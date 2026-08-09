@@ -1,0 +1,47 @@
+[
+  {
+    "event_id": "evt-synthetic-dup-001",
+    "event_type": "submission.received",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-1",
+    "occurred_at": "2026-08-09T10:20:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "to_status": "received",
+    "idempotency_key": "idem-sub-dup-0001"
+  },
+  {
+    "event_id": "evt-synthetic-dup-002",
+    "event_type": "submission.accepted",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-1",
+    "occurred_at": "2026-08-09T10:41:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "validating",
+    "to_status": "accepted"
+  },
+  {
+    "event_id": "evt-synthetic-dup-003",
+    "event_type": "submission.duplicate",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-2",
+    "occurred_at": "2026-08-09T10:26:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "received",
+    "to_status": "duplicate",
+    "error_codes": ["E_DUPLICATE_SUBMISSION"]
+  },
+  {
+    "event_id": "evt-synthetic-dup-004",
+    "event_type": "submission.accepted",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-dup-3",
+    "occurred_at": "2026-08-09T10:46:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "validating",
+    "to_status": "accepted"
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "attempt_id": "att-synthetic-pa-1",
+    "claim_id": "claim-synthetic-pa-1",
+    "status": "succeeded",
+    "started_at": "2026-08-09T10:05:00+08:00",
+    "finished_at": "2026-08-09T10:25:00+08:00",
+    "synthetic": true,
+    "execution_environment": "synthetic",
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "3-5"
+    }
+  }
+]

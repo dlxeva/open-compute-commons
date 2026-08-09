@@ -1,0 +1,11 @@
+[
+  {
+    "unit_id": "unit-synthetic-021",
+    "task_definition_id": "td-synthetic-alttext",
+    "input_ref": "synthetic://image/021",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sensitivity_level": "L0",
+    "difficulty_hint": "easy",
+    "synthetic": true
+  }
+]

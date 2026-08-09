@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/unit.schema.json",
+  "title": "OCC Unit (v0.2 core, candidate draft)",
+  "$comment": "验收原子。spec/TASK_SPLITTING_v0.1.md §1.1。MUST 可独立验收，MUST NOT 跨敏感级别。",
+  "type": "object",
+  "required": ["unit_id", "task_definition_id", "input_ref", "content_hash"],
+  "properties": {
+    "unit_id": { "type": "string", "pattern": "^unit-[A-Za-z0-9_-]+$" },
+    "task_definition_id": { "type": "string", "pattern": "^td-[A-Za-z0-9_-]+$" },
+    "input_ref": { "type": "string" },
+    "input_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "content_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "sensitivity_level": { "type": "string", "enum": ["L0", "L1", "L2", "L3"] },
+    "difficulty_hint": { "type": "string", "enum": ["easy", "medium", "hard", "unknown"] },
+    "synthetic": { "type": "boolean" },
+    "workload_envelope": {
+      "type": "object",
+      "properties": {
+        "human_minutes_p50": { "type": "number", "minimum": 0 },
+        "human_minutes_p90": { "type": "number", "minimum": 0 },
+        "basis": { "type": "string", "enum": ["measured", "calibrated", "assumed", "unknown"] }
+      },
+      "additionalProperties": false
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

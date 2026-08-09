@@ -1,0 +1,25 @@
+[
+  {
+    "record_id": "cr-synthetic-pa-0001",
+    "action_id": "act-synthetic-alttext-001",
+    "contributor_ref": "pseudo-alpha",
+    "track": "E",
+    "evidence_class": "activity",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-pa-1",
+    "confirming_event_id": "evt-synthetic-pa-002",
+    "recorded_at": "2026-08-09T10:54:00+08:00",
+    "status": "active",
+    "synthetic": true,
+    "activity_measures": {
+      "accepted_units": 2,
+      "rejected_units": 1,
+      "completed_attempts": 1
+    },
+    "self_reported_usage": {
+      "self_reported": true,
+      "model_calls_range": "3-5"
+    },
+    "notes": "SYNTHETIC：只对通过的 2 个 Unit 计 accepted；失败的 1 个记为 rejected_units（活动证据，非惩罚）。返工成功后将产生新记录，不修改本条。"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://open-compute-commons.example/schemas/core/attempt.schema.json",
+  "title": "OCC Attempt (v0.2 core, candidate draft)",
+  "$comment": "执行计量原子。spec/PROTOCOL_v0.2.md §2.7。用量 MUST 标注 self_reported；MUST NOT 记录凭据、账号或完整对话记录。",
+  "type": "object",
+  "required": ["attempt_id", "claim_id", "status", "started_at"],
+  "properties": {
+    "attempt_id": { "type": "string", "pattern": "^att-[A-Za-z0-9_-]+$" },
+    "claim_id": { "type": "string", "pattern": "^claim-[A-Za-z0-9_-]+$" },
+    "status": { "type": "string", "enum": ["running", "succeeded", "failed", "abandoned"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": "string", "format": "date-time" },
+    "synthetic": { "type": "boolean" },
+    "execution_environment": {
+      "type": "string",
+      "enum": ["participant_browser", "participant_local_client", "participant_own_compute", "institution_controlled", "synthetic"],
+      "$comment": "环境类别，非设备指纹。"
+    },
+    "model_capability_tier": {
+      "type": "string",
+      "$comment": "模型能力等级/类别，MUST NOT 为具体账号或密钥标识。"
+    },
+    "self_reported_usage": {
+      "type": "object",
+      "required": ["self_reported"],
+      "properties": {
+        "self_reported": {
+          "type": "boolean",
+          "enum": [true],
+          "$comment": "固定 true。实现 MUST NOT 将自报用量呈现为已核实计量。"
+        },
+        "model_calls_range": { "type": "string" },
+        "wall_clock_minutes_range": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "failure_error_code": { "type": "string", "pattern": "^E_[A-Z_]+$" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

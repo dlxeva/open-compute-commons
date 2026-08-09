@@ -1,0 +1,57 @@
+{
+  "task_definition_id": "td-synthetic-sample-alttext",
+  "action_id": "act-synthetic-sample-001",
+  "version": "1.0",
+  "status": "frozen",
+  "synthetic": true,
+  "instructions_ref": "examples/synthetic-action/instructions.md",
+  "output_schema_ref": "schemas/core/submission.schema.json#/definitions/unit_result",
+  "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "frozen_at": "2026-08-09T10:00:00+08:00",
+  "calibration_status": "not_started",
+  "acceptance_policy": {
+    "rules": [
+      {
+        "id": "schema_shape",
+        "layer": "L1_schema",
+        "rule": "unit_result MUST 符合 submission.schema.json#/definitions/unit_result；outcome=skipped MUST 附 skip_reason_code",
+        "error_code": "E_SCHEMA_INVALID",
+        "redline": false
+      },
+      {
+        "id": "len",
+        "layer": "L2_rule",
+        "rule": "output 长度 MUST 在 40-200 字符之间（含端点）",
+        "error_code": "E_RULE_LENGTH_OUT_OF_RANGE",
+        "redline": false
+      },
+      {
+        "id": "no_sensitive",
+        "layer": "L2_rule",
+        "rule": "output MUST NOT 含 L1+ 敏感内容、PII 或凭据",
+        "error_code": "E_REDLINE_SENSITIVE_DATA",
+        "redline": true
+      },
+      {
+        "id": "human_spotcheck",
+        "layer": "L4_human",
+        "rule": "人工抽检确认描述与输入一致且无臆造事实",
+        "error_code": "E_HUMAN_REJECTED",
+        "redline": false
+      }
+    ],
+    "combination_rule": "all_layers_must_pass",
+    "consensus_rule": "human_arbitration",
+    "l4_sample_ratio": 1.0,
+    "max_rework_rounds": 2,
+    "rework_open_to": "anyone"
+  },
+  "workload_envelope": {
+    "unit_of_measure": "unit",
+    "human_minutes": { "p50": 3, "p90": 8, "basis": "assumed" },
+    "model_calls": { "p50": 1, "p90": 3, "basis": "assumed" },
+    "expected_attempts_per_claim": { "p50": 1, "p90": 2, "basis": "assumed" },
+    "notes": "SYNTHETIC：basis=assumed，无任何实测依据。calibration_status=not_started。MUST NOT 被引用为工作量证据。"
+  },
+  "notes": "SYNTHETIC 演示用 TaskDefinition。不对应任何真实任务方、真实授权数据或公益成果。"
+}

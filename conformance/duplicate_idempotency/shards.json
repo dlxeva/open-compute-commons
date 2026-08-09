@@ -1,0 +1,16 @@
+[
+  {
+    "shard_id": "shard-synthetic-dup-a",
+    "task_definition_id": "td-synthetic-alttext",
+    "task_definition_version": "1.0",
+    "unit_ids": ["unit-synthetic-021"],
+    "status": "completed",
+    "version": "1.0",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "synthetic": true,
+    "lease_duration_seconds": 3600,
+    "max_concurrent_claims": 2,
+    "replication_factor": 2,
+    "notes": "SYNTHETIC：replication_factor=2，用于区分 replication 与 idempotency。"
+  }
+]

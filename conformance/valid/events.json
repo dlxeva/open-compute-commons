@@ -1,0 +1,59 @@
+[
+  {
+    "event_id": "evt-synthetic-valid-001",
+    "event_type": "task_definition.frozen",
+    "subject_type": "task_definition",
+    "subject_id": "td-synthetic-alttext",
+    "occurred_at": "2026-08-09T09:30:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "review",
+    "to_status": "frozen"
+  },
+  {
+    "event_id": "evt-synthetic-valid-002",
+    "event_type": "claim.created",
+    "subject_type": "claim",
+    "subject_id": "claim-synthetic-valid-1",
+    "occurred_at": "2026-08-09T10:00:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "actor_ref": "pseudo-alpha",
+    "to_status": "active",
+    "idempotency_key": "idem-claim-valid-0001"
+  },
+  {
+    "event_id": "evt-synthetic-valid-003",
+    "event_type": "submission.received",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-valid-1",
+    "occurred_at": "2026-08-09T10:20:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "actor_ref": "pseudo-alpha",
+    "to_status": "received",
+    "idempotency_key": "idem-sub-valid-0001"
+  },
+  {
+    "event_id": "evt-synthetic-valid-004",
+    "event_type": "submission.accepted",
+    "subject_type": "submission",
+    "subject_id": "sub-synthetic-valid-1",
+    "occurred_at": "2026-08-09T10:41:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "validating",
+    "to_status": "accepted"
+  },
+  {
+    "event_id": "evt-synthetic-valid-005",
+    "event_type": "shard.completed",
+    "subject_type": "shard",
+    "subject_id": "shard-synthetic-valid-a",
+    "occurred_at": "2026-08-09T10:42:00+08:00",
+    "action_id": "act-synthetic-alttext-001",
+    "synthetic": true,
+    "from_status": "fully_claimed",
+    "to_status": "completed"
+  }
+]
