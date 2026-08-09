@@ -60,7 +60,7 @@ boundary is fixed and stated here so there is no ambiguity:
 
 | License | Applies to |
 |---|---|
-| **CC BY 4.0** (documentation) | `README.md`, `PROPOSAL.md`, `spec/*.md`, `docs/*.md`, `CONTRIBUTING.md`, `SECURITY.md`, `PUBLISH_CHECKLIST.md`, `LICENSE_OPTIONS.md`, `LICENSE-DOCS.md`, `examples/synthetic-action/*.md` |
+| **CC BY 4.0** (documentation) | `README.md`, `PROPOSAL.md`, `spec/**/*.md`, `docs/**/*.md`, `CONTRIBUTING.md`, `SECURITY.md`, `PUBLISH_CHECKLIST.md`, `LICENSE_OPTIONS.md`, `LICENSE-DOCS.md`, `examples/synthetic-action/**/*.md`, `schemas/core/**/*.md` |
 | **Apache-2.0** (code / schema / fixture) | `schemas/core/*.json`, `conformance/**/*.json`, `examples/synthetic-action/*.json`, `scripts/*.py` |
 
 - Full text of Apache-2.0: `LICENSE`.
@@ -75,8 +75,33 @@ imply endorsement by, or affiliation with, any institution. No institution has r
 this material, and no legal entity exists behind it. All examples and fixtures are `synthetic: true`
 placeholder content.
 
-Note on language: the specifications in `spec/` and the example package are currently written in
-Chinese. Translation is an open item; see `CONTRIBUTING.md`.
+## Language policy
+
+**English is the authoritative public version of this repository.** The English documents at their
+canonical paths are the versions to review, cite, and raise objections against. Chinese mirrors are
+provided for readers who prefer Chinese; where a mirror and the English version diverge, the English
+version governs.
+
+The Chinese mirrors are copies of the pre-translation Chinese source text. They are not maintained
+in lockstep and **MAY** lag behind the English version.
+
+| English (authoritative) | 中文镜像 (Chinese mirror) |
+|---|---|
+| [`spec/PROTOCOL_v0.2.md`](spec/PROTOCOL_v0.2.md) | [`spec/i18n/zh-CN/PROTOCOL_v0.2.md`](spec/i18n/zh-CN/PROTOCOL_v0.2.md) |
+| [`spec/TASK_SPLITTING_v0.1.md`](spec/TASK_SPLITTING_v0.1.md) | [`spec/i18n/zh-CN/TASK_SPLITTING_v0.1.md`](spec/i18n/zh-CN/TASK_SPLITTING_v0.1.md) |
+| [`spec/CONTRIBUTION_v0.1.md`](spec/CONTRIBUTION_v0.1.md) | [`spec/i18n/zh-CN/CONTRIBUTION_v0.1.md`](spec/i18n/zh-CN/CONTRIBUTION_v0.1.md) |
+| [`docs/CONFORMANCE_REPORT.md`](docs/CONFORMANCE_REPORT.md) | [`docs/i18n/zh-CN/CONFORMANCE_REPORT.md`](docs/i18n/zh-CN/CONFORMANCE_REPORT.md) |
+| [`examples/synthetic-action/README.md`](examples/synthetic-action/README.md) | [`examples/synthetic-action/i18n/zh-CN/README.md`](examples/synthetic-action/i18n/zh-CN/README.md) |
+| [`examples/synthetic-action/instructions.md`](examples/synthetic-action/instructions.md) | [`examples/synthetic-action/i18n/zh-CN/instructions.md`](examples/synthetic-action/i18n/zh-CN/instructions.md) |
+| [`schemas/core/README.md`](schemas/core/README.md) | [`schemas/core/i18n/zh-CN/README.md`](schemas/core/i18n/zh-CN/README.md) |
+
+Documents not listed above (`PROPOSAL.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE_OPTIONS.md`,
+`PUBLISH_CHECKLIST.md`) have no Chinese mirror. The "中文摘要" section at the end of this README is a
+summary, not a mirror of the full English text above it. Translating the remaining documents is an
+open item; see `CONTRIBUTING.md`.
+
+Licensing is unchanged by language: a Chinese mirror carries the same license as the English file it
+mirrors (`i18n/zh-CN/*.md` are documentation, CC BY 4.0).
 
 ## Verify it locally
 
@@ -120,6 +145,10 @@ Two kinds of hashes appear in `examples/synthetic-action/`, and they are not equ
 ---
 
 ## 中文摘要
+
+> **语言政策**：本仓库以**英文为权威公开版本**。中文镜像见各文档的 `i18n/zh-CN/` 路径
+> （对照表见上文 "Language policy"）。中文镜像是翻译前中文原文的副本，可能滞后于英文版；
+> 两者不一致时**以英文版为准**。本节是摘要，不是上文英文正文的完整镜像。
 
 **这是一份候选讨论稿，不是已运行的项目。**
 

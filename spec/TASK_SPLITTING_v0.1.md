@@ -1,120 +1,123 @@
-# Open Compute Commons：任务切分规范 v0.1（候选草案 / candidate draft）
+# Open Compute Commons: Task Splitting Specification v0.1 (candidate draft)
 
-- **状态**：candidate draft，未发布、未实现。
-- **日期**：2026-08-09。
-- **依赖**：`spec/PROTOCOL_v0.2.md`（对象模型与状态机）。
-- **性质**：切分方法学与数据契约候选。本文件所有数值、样例任务与工作量估算均为 **synthetic**，**不是真实 Pilot 成果**。
+> English is the authoritative public version of this document.
+> Chinese mirror: [`spec/i18n/zh-CN/TASK_SPLITTING_v0.1.md`](i18n/zh-CN/TASK_SPLITTING_v0.1.md).
+
+- **Status**: candidate draft — unpublished, unimplemented.
+- **Date**: 2026-08-09.
+- **Depends on**: `spec/PROTOCOL_v0.2.md` (object model and state machines).
+- **Nature**: a candidate splitting methodology and data contract. Every number, sample task and workload estimate in this document is **synthetic** and **not the output of a real pilot**.
 
 ---
 
-## 1. 三种原子（本规范的核心区分）
+## 1. The three atoms (the core distinction of this specification)
 
-v0.1 协议只有一个模糊的"分片"概念，导致验收、认领、计量三件事被绑死。v0.2 把它们拆成三个独立的原子：
+The v0.1 protocol had only a vague notion of a "shard", which welded together three separate concerns: acceptance, claiming and metering. v0.2 splits them into three independent atoms:
 
-| 原子 | 回答的问题 | 谁在意 | 数量关系 |
+| Atom | Question it answers | Who cares | Cardinality |
 |---|---|---|---|
-| **Unit** | 这一小块**做对了吗**？ | 验收者、需求方 | 1 Unit = 1 次独立 pass/fail 判定 |
-| **Shard** | 这一批**归谁做**？ | 参与者、协调者 | 1 Shard = 1..N 个 Unit |
-| **Attempt** | 这次执行**花了多少**？ | 计量、账本 | 1 Claim = 1..N 个 Attempt |
+| **Unit** | Was this small piece **done correctly**? | Acceptors, requesters | 1 Unit = 1 independent pass/fail judgement |
+| **Shard** | **Who takes** this batch? | Participants, coordinators | 1 Shard = 1..N Units |
+| **Attempt** | **How much did** this execution cost? | Metering, ledger | 1 Claim = 1..N Attempts |
 
-### 1.1 Unit 是验收原子
+### 1.1 Unit is the acceptance atom
 
-- Unit 是能被**独立**判定通过或不通过的最小工作。
-- 判定 Unit A 时 **MUST NOT** 依赖 Unit B 的结果。
-- 一个 Unit **MUST** 最终对应至多一个 active CanonicalResult。
-- 部分通过、返工、共识，全部在 **Unit 粒度**上发生。
+- A Unit is the smallest work that can be judged pass or fail **independently**.
+- Judging Unit A **MUST NOT** depend on the result of Unit B.
+- A Unit **MUST** ultimately correspond to at most one active CanonicalResult.
+- Partial acceptance, rework and consensus all happen at **Unit granularity**.
 
-**为什么重要**：如果验收只能在整批上做，那么 100 个里错 1 个就得整批返工，参与者的 99 份劳动被浪费。Unit 粒度让部分通过成为一等公民。
+**Why this matters**: if acceptance can only be done over a whole batch, then 1 error out of 100 forces the entire batch into rework, wasting the participant's other 99 pieces of work. Unit granularity makes partial acceptance a first-class outcome.
 
-### 1.2 Shard 是认领原子
+### 1.2 Shard is the claim atom
 
-- Shard 是参与者在界面上"领"的那个东西。
-- Shard 的大小由**人的一次坐下能做完多少**决定，不由验收逻辑决定。
-- Shard **MUST NOT** 影响验收粒度：把 20 个 Unit 打成一个 Shard，仍然是 20 次独立判定。
+- A Shard is the thing a participant "takes" in the interface.
+- The size of a Shard is determined by **how much a person can finish in one sitting**, not by acceptance logic.
+- A Shard **MUST NOT** affect acceptance granularity: bundling 20 Units into one Shard still means 20 independent judgements.
 
-**为什么重要**：认领粒度是人体工学问题（太小则交互成本高，太大则无人敢领、超时率高），验收粒度是质量问题。两者最优值几乎从不相同。
+**Why this matters**: claim granularity is an ergonomics problem (too small and interaction cost dominates; too large and nobody dares take it and timeout rates rise), while acceptance granularity is a quality problem. Their optimal values are almost never the same.
 
-### 1.3 Attempt 是执行计量原子
+### 1.3 Attempt is the execution-metering atom
 
-- 一次 Claim 下可以有多次 Attempt：第一次模型输出不合格、换模型重试、中途中断后重来。
-- 用量、时长、模型信息记在 Attempt 上，**不记在 Shard 上**。
-- Attempt 记录 **MUST** 标注 `self_reported`。
+- One Claim can have several Attempts: the first model output was inadequate, a retry with a different model, a restart after an interruption.
+- Usage, duration and model information are recorded on the Attempt, **not on the Shard**.
+- Attempt records **MUST** be labelled `self_reported`.
 
-**为什么重要**：如果把用量记在 Shard 上，重试就会污染工作量基线；把它记在 Attempt 上，才能得到"完成一个 Shard 平均需要几次尝试"这个真正有用的校准数据。
+**Why this matters**: recording usage on the Shard would let retries pollute the workload baseline. Recording it on the Attempt is what yields the genuinely useful calibration figure: "how many attempts does completing one Shard take on average".
 
-### 1.4 三者关系图
+### 1.4 Relationship diagram
 
 ```text
 TaskDefinition (frozen)
    │
    ├── Unit u1 ─┐
-   ├── Unit u2 ─┼── Shard s1 ── Claim c1 ── Attempt a1 (失败)
-   ├── Unit u3 ─┘              └─ Attempt a2 (成功) ── Submission sub1
+   ├── Unit u2 ─┼── Shard s1 ── Claim c1 ── Attempt a1 (failed)
+   ├── Unit u3 ─┘              └─ Attempt a2 (succeeded) ── Submission sub1
    │                                                      ├── u1: pass  → CanonicalResult
    │                                                      ├── u2: pass  → CanonicalResult
    │                                                      └── u3: fail  → rework
    ├── Unit u4 ─┐
    └── Unit u5 ─┴── Shard s2 ── Claim c2 ── ...
 
-   Unit u3 → Shard s3 (rework, parent_shard_id = s1)   ← 只含失败的 u3
+   Unit u3 → Shard s3 (rework, parent_shard_id = s1)   ← contains only the failed u3
 ```
 
 ---
 
-## 2. 切分约束（Splitting Constraints）
+## 2. Splitting Constraints
 
-### 2.1 Unit 层约束
+### 2.1 Unit-level constraints
 
-| # | 约束 | 强度 |
+| # | Constraint | Strength |
 |---|---|---|
-| U1 | Unit **MUST** 可独立验收，不依赖同批其他 Unit 结果 | MUST |
-| U2 | Unit **MUST** 有稳定标识 `unit_id` 与输入 `content_hash` | MUST |
-| U3 | Unit **MUST NOT** 跨越不同 `sensitivity_level` | MUST |
-| U4 | Unit 的验收标准 **MUST** 在 TaskDefinition 冻结时已确定 | MUST |
-| U5 | Unit **SHOULD** 小到单次判定在人可承受的注意力内完成 | SHOULD |
-| U6 | Unit **SHOULD NOT** 需要参与者自行获取额外外部资料 | SHOULD |
-| U7 | Unit **MAY** 携带难度标记，供后续校准使用 | MAY |
+| U1 | A Unit **MUST** be independently acceptable, without depending on other Units' results in the same batch | MUST |
+| U2 | A Unit **MUST** have a stable identifier `unit_id` and an input `content_hash` | MUST |
+| U3 | A Unit **MUST NOT** span different `sensitivity_level` values | MUST |
+| U4 | A Unit's acceptance criteria **MUST** already be fixed when the TaskDefinition is frozen | MUST |
+| U5 | A Unit **SHOULD** be small enough that a single judgement fits within a person's tolerable attention span | SHOULD |
+| U6 | A Unit **SHOULD NOT** require the participant to obtain additional external material on their own | SHOULD |
+| U7 | A Unit **MAY** carry a difficulty marker for later calibration | MAY |
 
-### 2.2 Shard 层约束
+### 2.2 Shard-level constraints
 
-| # | 约束 | 强度 |
+| # | Constraint | Strength |
 |---|---|---|
-| S1 | Shard **MUST** 非空（至少一个 Unit） | MUST |
-| S2 | Shard 内 Unit **MUST** 属于同一 TaskDefinition 同一 version | MUST |
-| S3 | Shard 内 Unit **MUST** 共享同一 `data_policy` 敏感级别 | MUST |
-| S4 | Shard **MUST** 声明 `lease_duration_seconds` | MUST |
-| S5 | 返工 Shard **MUST** 只含未通过 Unit，并设 `parent_shard_id` | MUST |
-| S6 | Shard 大小 **SHOULD** 使 `workload_envelope` 上界落在单次可完成范围内 | SHOULD |
-| S7 | 同一 Unit 出现在多个并行 Shard 中 **MUST** 仅因 replication 或 rework | MUST |
-| S8 | Shard **SHOULD NOT** 混合难度差异极大的 Unit（破坏工作量估算） | SHOULD |
-| S9 | Shard **MAY** 声明 `max_concurrent_claims` 与 `replication_factor` | MAY |
+| S1 | A Shard **MUST** be non-empty (at least one Unit) | MUST |
+| S2 | Units within a Shard **MUST** belong to the same TaskDefinition at the same version | MUST |
+| S3 | Units within a Shard **MUST** share the same `data_policy` sensitivity level | MUST |
+| S4 | A Shard **MUST** declare `lease_duration_seconds` | MUST |
+| S5 | A rework Shard **MUST** contain only Units that did not pass, and **MUST** set `parent_shard_id` | MUST |
+| S6 | Shard size **SHOULD** keep the upper bound of `workload_envelope` within what one sitting can complete | SHOULD |
+| S7 | The same Unit appearing in multiple parallel Shards **MUST** be only because of replication or rework | MUST |
+| S8 | A Shard **SHOULD NOT** mix Units of wildly differing difficulty (it breaks workload estimation) | SHOULD |
+| S9 | A Shard **MAY** declare `max_concurrent_claims` and `replication_factor` | MAY |
 
-### 2.3 Attempt 层约束
+### 2.3 Attempt-level constraints
 
-| # | 约束 | 强度 |
+| # | Constraint | Strength |
 |---|---|---|
-| A1 | Attempt **MUST** 关联到一个 Claim | MUST |
-| A2 | 用量字段 **MUST** 标注 `self_reported: true` | MUST |
-| A3 | Attempt **MUST NOT** 记录凭据、账号或完整对话记录 | MUST |
-| A4 | 失败的 Attempt **MUST NOT** 被删除（是校准数据） | MUST |
-| A5 | Attempt **SHOULD** 记录模型类别 / 能力等级，而非具体账号 | SHOULD |
+| A1 | An Attempt **MUST** be associated with one Claim | MUST |
+| A2 | Usage fields **MUST** be labelled `self_reported: true` | MUST |
+| A3 | An Attempt **MUST NOT** record credentials, accounts or complete conversation transcripts | MUST |
+| A4 | Failed Attempts **MUST NOT** be deleted (they are calibration data) | MUST |
+| A5 | An Attempt **SHOULD** record the model category / capability tier, not a specific account | SHOULD |
 
 ---
 
-## 3. workload_envelope（工作量信封）
+## 3. workload_envelope
 
-不用单点估计，用**区间 + 依据等级**。单点估计会被当成承诺，区间才诚实。
+Do not use point estimates; use a **range plus a basis level**. A point estimate gets treated as a commitment; only a range is honest.
 
-### 3.1 结构
+### 3.1 Structure
 
 ```yaml
 workload_envelope:
   unit_of_measure: "unit"          # unit | shard | attempt
-  human_minutes:                   # 人的注意力时间
+  human_minutes:                   # human attention time
     p50: 3
     p90: 8
     basis: "assumed"               # measured | calibrated | assumed | unknown
-  model_calls:                     # 模型调用次数
+  model_calls:                     # number of model calls
     p50: 1
     p90: 3
     basis: "assumed"
@@ -122,94 +125,94 @@ workload_envelope:
     p50: 1
     p90: 2
     basis: "assumed"
-  notes: "全部为 synthetic 假设值，无真实执行数据支撑"
+  notes: "All values are synthetic assumptions with no real execution data behind them"
 ```
 
-### 3.2 basis 等级（必须诚实标注）
+### 3.2 basis levels (must be labelled honestly)
 
-| basis | 含义 | 可用于 |
+| basis | Meaning | Usable for |
 |---|---|---|
-| `measured` | 来自本任务真实执行数据 | 正式估算 |
-| `calibrated` | 来自校准批次（同类任务，样本 ≥ 校准要求） | 正式估算 |
-| `assumed` | 拍脑袋 / 类比推测 | **仅供讨论**，MUST 标注 |
-| `unknown` | 没有依据 | MUST 标注，MUST NOT 用于对外承诺 |
+| `measured` | From real execution data for this task | Formal estimation |
+| `calibrated` | From a calibration batch (similar task, sample size ≥ the calibration requirement) | Formal estimation |
+| `assumed` | Guesswork / reasoning by analogy | **Discussion only**; MUST be labelled |
+| `unknown` | No basis at all | MUST be labelled; MUST NOT be used in any external commitment |
 
-规则：
-- Action 发布前，`workload_envelope.basis` **SHOULD** 至少达到 `calibrated`。
-- 若为 `assumed` 或 `unknown`，发布材料 **MUST** 显式说明"工作量估算无实测依据"。
-- **本仓库所有 workload_envelope 均为 `assumed`**（无任何真实执行数据）。
+Rules:
+- Before an Action is published, `workload_envelope.basis` **SHOULD** reach at least `calibrated`.
+- If it is `assumed` or `unknown`, the published material **MUST** state explicitly that "the workload estimate has no measured basis".
+- **Every workload_envelope in this repository is `assumed`** (there is no real execution data whatsoever).
 
-### 3.3 为什么不用单点值
+### 3.3 Why not a point value
 
-自报用量 + 单点估计 = 参与者会把估计值当上限，超出就认为自己做错了，或者提前放弃。区间 + p90 让"这次花了 7 分钟"是正常的，不是异常。
+Self-reported usage + a point estimate = participants treat the estimate as an upper bound, and either conclude they did something wrong when they exceed it or give up early. A range plus p90 makes "this one took 7 minutes" normal rather than anomalous.
 
 ---
 
-## 4. 从校准到冻结发布的流程
+## 4. From calibration to frozen release
 
 ```text
-[1] draft_split        切分草案：定义 Unit 边界与验收规则
+[1] draft_split        Splitting draft: define Unit boundaries and acceptance rules
        ↓
-[2] dry_review         需求方 + 协调方评审：Unit 是否真的可独立验收
+[2] dry_review         Requester + coordinator review: are Units independently acceptable?
        ↓
-[3] calibration_batch  校准批次：小样本真实执行，测 workload 与错误率
+[3] calibration_batch  Calibration batch: small-sample execution, measure workload and error rate
        ↓
-[4] revise             按校准结果调整 Unit 粒度 / Shard 大小 / 验收阈值
+[4] revise             Adjust Unit granularity / Shard size / acceptance thresholds per calibration
        ↓
-[5] freeze             冻结 TaskDefinition：version + content_hash 固定
+[5] freeze             Freeze TaskDefinition: fix version + content_hash
        ↓
-[6] publish_shards     生成并发布 Shard，进入可认领
+[6] publish_shards     Generate and publish Shards for claiming
        ↓
-[7] recalibrate        执行中周期性回看：超时率、返工率、实际 attempt 数
+[7] recalibrate        Periodic review during execution: timeout rate, rework rate, actual attempt count
 ```
 
-### 4.1 各阶段门槛
+### 4.1 Gates between stages
 
-| 阶段 | 进入下一阶段的条件 | 强度 |
+| Stage | Condition for entering the next stage | Strength |
 |---|---|---|
-| [1]→[2] | 每个 Unit 有明确验收规则 | MUST |
-| [2]→[3] | 需求方确认领域验收标准 | MUST |
-| [3]→[4] | 校准批次完成，有实测 workload 与错误率 | SHOULD |
-| [4]→[5] | 验收阈值确定，`data_policy`/`execution_policy` 确认 | MUST |
-| [5]→[6] | `content_hash` 生成，version 固定 | MUST |
-| [6] 期间 | 冻结后 **MUST NOT** 原地改语义；改动走新 version | MUST |
+| [1]→[2] | Every Unit has explicit acceptance rules | MUST |
+| [2]→[3] | The requester has confirmed the domain acceptance criteria | MUST |
+| [3]→[4] | The calibration batch is complete, with measured workload and error rate | SHOULD |
+| [4]→[5] | Acceptance thresholds fixed; `data_policy`/`execution_policy` confirmed | MUST |
+| [5]→[6] | `content_hash` generated, version fixed | MUST |
+| During [6] | After freezing, semantics **MUST NOT** be changed in place; changes go through a new version | MUST |
 
-### 4.2 校准批次应测什么
+### 4.2 What a calibration batch should measure
 
-- 单 Unit 实际耗时分布（p50 / p90）；
-- 每 Claim 实际 Attempt 数；
-- L1/L2 自动检查的通过率（衡量说明是否够清楚）；
-- L4 人工判定与 L1/L2 的一致性（衡量自动检查是否够用）；
-- 不同参与者之间的结果分歧率（决定 `replication_factor`）；
-- 超时率（决定 `lease_duration_seconds`）。
+- The distribution of actual time per Unit (p50 / p90);
+- The actual number of Attempts per Claim;
+- The pass rate of the L1/L2 automated checks (a measure of whether the instructions are clear enough);
+- The agreement between L4 human judgement and L1/L2 (a measure of whether the automated checks are sufficient);
+- The rate of divergence between different participants' results (which determines `replication_factor`);
+- The timeout rate (which determines `lease_duration_seconds`).
 
-> **当前状态：unknown。** 从未运行过校准批次。上述指标本仓库全部没有数据。
+> **Current status: unknown.** No calibration batch has ever been run. This repository has no data for any of the metrics above.
 
-### 4.3 冻结的含义
+### 4.3 What freezing means
 
-冻结后 **MUST NOT** 改动：Unit 边界、验收规则、输出 schema、红线定义。
+After freezing, the following **MUST NOT** change: Unit boundaries, acceptance rules, output schema, redline definitions.
 
-冻结后 **MAY** 改动（不影响已提交结果的语义）：`lease_duration_seconds`、`max_concurrent_claims`、Shard 的打包方式（对尚未认领的 Shard）。
+After freezing, the following **MAY** change (they do not affect the semantics of results already submitted): `lease_duration_seconds`, `max_concurrent_claims`, and how Shards are bundled (for Shards not yet claimed).
 
-任何对冻结项的改动 **MUST** 产生新 version，且已基于旧 version 的 Submission **MUST** 按旧 version 验收（§PROTOCOL_v0.2 2.3）。
+Any change to a frozen item **MUST** produce a new version, and Submissions already based on the old version **MUST** be accepted under the old version (§PROTOCOL_v0.2 2.3).
 
 ---
 
-## 5. 公共任务示例（**SYNTHETIC — 合成示例，非真实任务**）
+## 5. Public task example (**SYNTHETIC — a synthetic example, not a real task**)
 
-> ⚠️ **本示例完全是合成的。**没有真实需求方、没有真实图片、没有真实授权、没有真实受益对象。所有 ID、数值、hash 均为演示用。**MUST NOT** 被引用为 OCC 已完成的公益成果或已开展的 Pilot。
+> ⚠️ **This example is entirely synthetic.** There is no real requester, no real images, no real authorization and no real beneficiary. All IDs, values and hashes are for demonstration. It **MUST NOT** be cited as public-benefit output completed by OCC or as a pilot that has been carried out.
 
-### 5.1 场景设定（合成）
+### 5.1 Scenario (synthetic)
 
-为一批**假设的**公开授权教育插图生成无障碍描述（alt text）。
+Generating accessibility descriptions (alt text) for a batch of **hypothetical** publicly licensed educational illustrations.
 
 ```yaml
 action_id: "act-synthetic-alttext-001"
-title: "[SYNTHETIC] 公开授权教育插图无障碍描述"
+title: "[SYNTHETIC] Accessibility descriptions for publicly licensed educational illustrations"
 synthetic: true
 data_policy:
   sensitivity_level: "L0"
-  license: "SYNTHETIC-PLACEHOLDER"     # 非真实许可
+  license: "SYNTHETIC-PLACEHOLDER"     # not a real license
   authorization_ref: "synthetic://no-real-authorization"
   redistribution_allowed: true
   pii_present: false
@@ -219,11 +222,11 @@ execution_policy:
   account_custody: "participant_self_custody"
 ```
 
-### 5.2 Unit 定义（合成）
+### 5.2 Unit definition (synthetic)
 
-一个 Unit = 一张图片的一条无障碍描述。
+One Unit = one accessibility description for one image.
 
-满足 U1（独立验收）：判定"这张图的描述是否合格"不需要看别的图。
+This satisfies U1 (independent acceptance): judging "is the description for this image adequate" does not require looking at any other image.
 
 ```yaml
 unit_template:
@@ -232,31 +235,31 @@ unit_template:
   acceptance_rules:
     - id: "len"
       layer: "L2"
-      rule: "描述长度 40–200 字符"
+      rule: "Description length 40–200 characters"
       error_code: "E_RULE_LENGTH_OUT_OF_RANGE"
     - id: "no_speculation"
       layer: "L2"
-      rule: "不得推测图中未显示的信息（人物身份、地点、年代）"
+      rule: "MUST NOT speculate about information not shown in the image (identity of people, location, period)"
       error_code: "E_RULE_SPECULATION_DETECTED"
     - id: "no_redundant_prefix"
       layer: "L2"
-      rule: "不得以「一张图片显示」等冗余前缀开头"
+      rule: "MUST NOT begin with a redundant prefix such as \"an image shows\""
       error_code: "E_RULE_FORBIDDEN_CONTENT"
     - id: "domain_adequacy"
       layer: "L4"
-      rule: "教育语境下信息充分性由需求方判定"
+      rule: "Informational adequacy in an educational context is judged by the requester"
       error_code: "E_HUMAN_DOMAIN_REJECT"
 ```
 
-### 5.3 三个合成 Unit
+### 5.3 Three synthetic Units
 
-| unit_id | 输入（合成） | 难度标记 |
+| unit_id | Input (synthetic) | Difficulty marker |
 |---|---|---|
-| `unit-synthetic-001` | `synthetic://image/001` 简单示意图 | easy |
-| `unit-synthetic-002` | `synthetic://image/002` 含图表的插图 | medium |
-| `unit-synthetic-003` | `synthetic://image/003` 多元素场景图 | hard |
+| `unit-synthetic-001` | `synthetic://image/001` simple diagram | easy |
+| `unit-synthetic-002` | `synthetic://image/002` illustration containing a chart | medium |
+| `unit-synthetic-003` | `synthetic://image/003` multi-element scene | hard |
 
-### 5.4 两个合成 Shard
+### 5.4 Two synthetic Shards
 
 ```yaml
 - shard_id: "shard-synthetic-a"
@@ -268,13 +271,13 @@ unit_template:
 - shard_id: "shard-synthetic-b"
   unit_ids: ["unit-synthetic-003"]
   lease_duration_seconds: 3600
-  replication_factor: 2        # 难度高，取两份独立结果
+  replication_factor: 2        # high difficulty, take two independent results
   max_concurrent_claims: 2
 ```
 
-注意 shard-b 展示了 Shard 与 Unit 的解耦：单个高难度 Unit 独立成 Shard 并要求重复执行。
+Note that shard-b demonstrates the decoupling of Shard from Unit: a single high-difficulty Unit forms its own Shard and requires repeated execution.
 
-### 5.5 合成 workload_envelope
+### 5.5 Synthetic workload_envelope
 
 ```yaml
 workload_envelope:
@@ -282,23 +285,23 @@ workload_envelope:
   human_minutes: { p50: 3, p90: 8, basis: "assumed" }
   model_calls:   { p50: 1, p90: 3, basis: "assumed" }
   expected_attempts_per_claim: { p50: 1, p90: 2, basis: "assumed" }
-  notes: "SYNTHETIC：无任何真实执行数据，basis 一律 assumed"
+  notes: "SYNTHETIC: no real execution data of any kind; basis is uniformly assumed"
 ```
 
 ---
 
-## 6. 部分通过（Partial Acceptance）
+## 6. Partial Acceptance
 
-### 6.1 规则
+### 6.1 Rules
 
-- 判定 **MUST** 逐 Unit 进行。
-- Submission 的整体状态在有 pass 有 fail 时 **MUST** 为 `partially_accepted`，**MUST NOT** 整体判 `rejected`。
-- 通过的 Unit **MUST** 立即产出 CanonicalResult 并可记账。
-- 未通过的 Unit **MUST** 进入返工流程，**MUST NOT** 阻塞已通过部分的结算。
+- Judgement **MUST** be made per Unit.
+- When there is a mix of passes and failures, the overall status of the Submission **MUST** be `partially_accepted` and **MUST NOT** be judged `rejected` as a whole.
+- Units that passed **MUST** immediately produce a CanonicalResult and become accountable.
+- Units that did not pass **MUST** enter the rework process and **MUST NOT** block settlement of the portion that passed.
 
-### 6.2 合成演练
+### 6.2 Synthetic walkthrough
 
-`shard-synthetic-a` 包含 u001、u002：
+`shard-synthetic-a` contains u001 and u002:
 
 ```text
 Submission sub-synthetic-a-1
@@ -306,105 +309,105 @@ Submission sub-synthetic-a-1
   └── unit-synthetic-002 → L1 pass, L2 fail (E_RULE_LENGTH_OUT_OF_RANGE) → rejected
 
 Submission status = partially_accepted
-  → unit-synthetic-001: CanonicalResult 建立，参与者记 1 个 accepted unit
-  → unit-synthetic-002: 进入返工
+  → unit-synthetic-001: CanonicalResult established; participant records 1 accepted unit
+  → unit-synthetic-002: enters rework
 ```
 
 ---
 
-## 7. 返工（Rework）
+## 7. Rework
 
-### 7.1 规则
+### 7.1 Rules
 
-- 返工 **MUST** 通过**新 Shard** 表达，**MUST NOT** 原地重开旧 Shard。
-- 返工 Shard **MUST** 设 `parent_shard_id`，**MUST** 只含未通过 Unit。
-- 返工 Shard **MUST NOT** 包含已有 active CanonicalResult 的 Unit。
-- 返工 Shard **SHOULD** 携带上一轮的错误码，让参与者知道要改什么。
-- 返工 **MAY** 由原参与者认领，也 **MAY** 开放给他人；策略 **MUST** 在 `acceptance_policy` 中声明。
-- 返工轮次 **SHOULD** 有上限；达上限后 Unit **SHOULD** 转 `human_arbitration` 或标记 `unresolvable`，**MUST NOT** 无限循环。
+- Rework **MUST** be expressed through a **new Shard** and **MUST NOT** reopen the old Shard in place.
+- A rework Shard **MUST** set `parent_shard_id` and **MUST** contain only Units that did not pass.
+- A rework Shard **MUST NOT** contain Units that already have an active CanonicalResult.
+- A rework Shard **SHOULD** carry the error codes from the previous round, so participants know what to change.
+- Rework **MAY** be claimed by the original participant, and **MAY** also be opened to others; the policy **MUST** be declared in `acceptance_policy`.
+- The number of rework rounds **SHOULD** be capped; once the cap is reached the Unit **SHOULD** move to `human_arbitration` or be marked `unresolvable`, and **MUST NOT** loop indefinitely.
 
-### 7.2 合成演练（承接 §6.2）
+### 7.2 Synthetic walkthrough (continuing from §6.2)
 
 ```yaml
 - shard_id: "shard-synthetic-a-rework-1"
   parent_shard_id: "shard-synthetic-a"
-  unit_ids: ["unit-synthetic-002"]        # 只有失败的那个
+  unit_ids: ["unit-synthetic-002"]        # only the one that failed
   rework_round: 1
   prior_error_codes: ["E_RULE_LENGTH_OUT_OF_RANGE"]
   lease_duration_seconds: 3600
 ```
 
-`unit-synthetic-001` **不在**返工分片里 —— 这是本规范最重要的行为演示，也是 `examples/synthetic-action/` 与 conformance fixture 要验证的点。
+`unit-synthetic-001` is **not** in the rework shard — this is the most important behavioural demonstration in this specification, and it is the point that `examples/synthetic-action/` and the conformance fixtures are meant to verify.
 
 ---
 
-## 8. 重复执行（Replication）与合并
+## 8. Replication and merging
 
-### 8.1 与幂等的区别
+### 8.1 Difference from idempotency
 
 | | Replication | Idempotency |
 |---|---|---|
-| 意图 | 有意多次独立执行 | 无意重复提交 |
-| 结果 | 多条**不同** Submission | 去重为**一条** |
-| 机制 | 不同 `claim_id` + 不同 `contributor_ref` | 相同 `idempotency_key` |
-| 记账 | 每个参与者各记自己的活动证据 | 只记一次 |
+| Intent | Deliberate multiple independent executions | Unintentional repeated submission |
+| Result | Multiple **different** Submissions | Deduplicated into **one** |
+| Mechanism | Different `claim_id` + different `contributor_ref` | Same `idempotency_key` |
+| Accounting | Each participant records their own activity evidence | Recorded only once |
 
-**MUST NOT** 用同一机制处理两者。
+The two **MUST NOT** be handled by the same mechanism.
 
-### 8.2 合并规则（consensus_rule）
+### 8.2 Merge rules (consensus_rule)
 
-当 `replication_factor > 1`，`acceptance_policy.consensus_rule` **MUST** 显式声明：
+When `replication_factor > 1`, `acceptance_policy.consensus_rule` **MUST** be declared explicitly:
 
-| 规则 | 含义 | 适用 |
+| Rule | Meaning | Applicable to |
 |---|---|---|
-| `unanimous` | 全部一致才采纳 | 高风险、低容错 |
-| `majority` | 多数一致采纳（N ≥ 3） | 有客观答案的分类任务 |
-| `highest_l3_score` | 取 L3 交叉核对得分最高者 | 有 gold set 时 |
-| `human_arbitration` | 人工在多份中选定 | 开放式生成任务 |
+| `unanimous` | Adopted only when all agree | High risk, low error tolerance |
+| `majority` | Adopted on majority agreement (N ≥ 3) | Classification tasks with objective answers |
+| `highest_l3_score` | Take the one with the highest L3 cross-check score | When a gold set exists |
+| `human_arbitration` | A human selects among the several results | Open-ended generation tasks |
 
-规则：
-- 无声明时 **MUST** 默认 `human_arbitration`，**MUST NOT** 默认取先到者。
-- `majority` 在 N = 2 时 **MUST NOT** 使用（无法产生多数），**MUST** 降级为 `human_arbitration`。
-- 未被采纳的那份 Submission **MUST NOT** 被判为"错误"，**MUST** 记为 `not_selected`；其参与者的活动证据照常记录（见 `spec/CONTRIBUTION_v0.1.md`）。
+Rules:
+- When not declared, it **MUST** default to `human_arbitration` and **MUST NOT** default to the first arrival.
+- `majority` **MUST NOT** be used when N = 2 (no majority can be formed) and **MUST** be downgraded to `human_arbitration`.
+- A Submission that is not selected **MUST NOT** be judged "wrong"; it **MUST** be recorded as `not_selected`, and its participant's activity evidence is recorded as usual (see `spec/CONTRIBUTION_v0.1.md`).
 
-### 8.3 合成演练
+### 8.3 Synthetic walkthrough
 
-`shard-synthetic-b`（u003，`replication_factor: 2`）：
+`shard-synthetic-b` (u003, `replication_factor: 2`):
 
 ```text
 Claim c-b-1 (contributor alpha) → sub-b-1 → L1/L2 pass
 Claim c-b-2 (contributor beta)  → sub-b-2 → L1/L2 pass
-L3 crosscheck: 分歧（两份描述侧重不同）
-consensus_rule: human_arbitration (N=2，不可用 majority)
-  → 仲裁选定 sub-b-1 → CanonicalResult(u003) ← sub-b-1
-  → sub-b-2 标记 not_selected（非错误）
-  → alpha 记 1 accepted unit；beta 记 1 completed attempt + not_selected
+L3 crosscheck: divergence (the two descriptions emphasize different things)
+consensus_rule: human_arbitration (N=2, majority unusable)
+  → arbitration selects sub-b-1 → CanonicalResult(u003) ← sub-b-1
+  → sub-b-2 marked not_selected (not an error)
+  → alpha records 1 accepted unit; beta records 1 completed attempt + not_selected
 ```
 
-### 8.4 迟交与重复的碰撞
+### 8.4 Collision between late submission and duplication
 
-若某 Unit 已有 active CanonicalResult，此后收到针对它的 Submission：
+If a Unit already has an active CanonicalResult and a Submission targeting it arrives afterwards:
 
-- **MUST NOT** 自动覆盖 CanonicalResult；
-- **MUST** 记录该 Submission 并标 `late=true` / `E_UNIT_ALREADY_CANONICAL`；
-- **MUST** 记录该参与者的活动证据（劳动真实发生过）；
-- **MAY** 在质量抽查中作为额外交叉核对样本使用。
+- The CanonicalResult **MUST NOT** be overwritten automatically;
+- The Submission **MUST** be recorded and marked `late=true` / `E_UNIT_ALREADY_CANONICAL`;
+- That participant's activity evidence **MUST** be recorded (the work really happened);
+- It **MAY** be used as an additional cross-check sample in quality spot checks.
 
 ---
 
 ## 9. Deferred / Unknown / Blocked
 
-**Deferred**：自动切分工具、Unit 难度自动分级、动态 Shard 打包、跨 Action 的工作量基线库。
+**Deferred**: automatic splitting tools, automatic difficulty grading of Units, dynamic Shard bundling, a cross-Action workload baseline library.
 
-**Unknown**：真实任务的合理 Unit 粒度；真实 human_minutes 分布；合理 `replication_factor`；合理返工轮次上限；校准批次需要多大样本；不同模型间结果分歧的真实幅度。
+**Unknown**: reasonable Unit granularity for a real task; the real human_minutes distribution; a reasonable `replication_factor`; a reasonable cap on rework rounds; how large a calibration batch needs to be; the real magnitude of result divergence between different models.
 
-**Blocked**：任何真实校准批次（无真实需求方与授权数据）；L1+ 任务的切分（无受控环境）；跨机构任务切分（无机构接洽）。
+**Blocked**: any real calibration batch (no real requester or authorized data); splitting L1+ tasks (no controlled environment); cross-institution task splitting (no institutional contact).
 
 ---
 
-## 10. 诚实声明
+## 10. Honest disclosure
 
-- 本文件为 candidate draft，**未实现、未运行、未验证**。
-- §5 示例明确标注 `synthetic: true`，**不是真实任务、不是 Pilot 成果、不代表任何真实需求方或授权数据**。
-- 所有工作量数值 `basis: assumed`，**无实测依据**。
-- 校准流程从未执行过；§4.2 所列指标本仓库全部没有数据。
+- This document is a candidate draft: **unimplemented, never run, unverified**.
+- The §5 example is explicitly marked `synthetic: true`; it is **not a real task, not pilot output, and does not represent any real requester or authorized data**.
+- All workload figures are `basis: assumed`, with **no measured basis**.
+- The calibration process has never been executed; this repository has no data for any of the metrics listed in §4.2.
