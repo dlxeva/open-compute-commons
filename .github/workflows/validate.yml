@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: MIT
+name: Validate candidate draft
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Parse JSON files
+        run: >-
+          python3 -c "import json,pathlib;
+          [json.loads(p.read_text(encoding='utf-8')) for p in pathlib.Path('.').rglob('*.json')];
+          print('json ok')"
+
+      - name: Run v0.2 conformance validator
+        run: python3 scripts/validate_v02.py
+
+      - name: Verify listed synthetic example checksums
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path("examples/synthetic-action")
+          manifest = json.loads((root / "checksums.json").read_text(encoding="utf-8"))
+          failures = []
+
+          for entry in manifest["files"]:
+              path = root / entry["path"]
+              if not path.is_file():
+                  failures.append(f"missing: {entry['path']}")
+                  continue
+              content = path.read_bytes()
+              actual_hash = hashlib.sha256(content).hexdigest()
+              if actual_hash != entry["sha256"]:
+                  failures.append(f"sha256 mismatch: {entry['path']}")
+              if len(content) != entry["bytes"]:
+                  failures.append(f"byte-count mismatch: {entry['path']}")
+
+          if failures:
+              print("\n".join(failures), file=sys.stderr)
+              raise SystemExit(1)
+          print(f"checksums ok ({len(manifest['files'])} listed files)")
+          PY

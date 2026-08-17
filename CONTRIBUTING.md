@@ -37,26 +37,43 @@ Only these:
 - **Personal information.** No names, emails, phone numbers, addresses, identifiers, or chat
   transcripts — yours or anyone else's. Participant references in fixtures use the `pseudo-` prefix
   and must stay pseudonymous.
-- **Anything that presumes the project is real.** Please do not add organization registration details,
-  sponsors, funding claims, real participants, real tasks, real beneficiaries, endorsements, service
-  levels, or roadmap dates. If a change would make a reader believe OCC exists as an operating entity,
-  it will be rejected.
+- **Anything that presents OCC as an operating project.** Please do not add organization registration
+  details, sponsors, funding claims, operational participants, accepted requesters, active tasks,
+  claimed beneficiaries, endorsements, service levels, or roadmap dates. A safely abstracted
+  candidate public need may be discussed through the Issue form below, but it must not be described
+  as accepted, scheduled, supplied, or served by OCC. If a change would make a reader believe OCC
+  exists as an operating entity, it will be rejected.
 - **Runtime implementation.** Control Plane, API, Runner, MCP adapter, ledger service, web UI. These
   are deliberately deferred (`spec/PROTOCOL_v0.2.md` §12.1). A specification with no implementation is
   the current point, not an oversight to fix.
 - **Dependencies.** No `node_modules`, no virtualenvs, no lockfiles, no package manifests. The
   verification path must remain "clone and run `python3`".
-- **External links**, except SPDX / license references and standards citations that the spec actually
-  needs (e.g. RFC 2119). If you cite research or prior art, mark it `TODO: unverified` unless you have
-  checked the primary source yourself, and record what you checked.
+- **Unnecessary or unsafe external links.** Repository-owned Issue-form links, SPDX / license
+  references, and standards citations that the spec actually needs are allowed. A candidate-need
+  Issue may also cite a directly relevant primary source that is public and accessible without login.
+  Private shares, access-granting URLs, unpublished material, and links that merely replace a safe
+  description are prohibited. If you cite other research or prior art, mark it `TODO: unverified`
+  unless you have checked the primary source yourself and record what you checked.
 
 ## How to raise something
 
-**Issues** — for questions, design objections, spec ambiguities, and reports of overstated claims.
-State which file and section, what you think is wrong, and what you would expect instead. If the
-maintainers have not yet enabled issues (see `PUBLISH_CHECKLIST.md`), that decision is pending.
+**Issues are the primary discussion channel.** Use the
+[design critique form](https://github.com/dlxeva/open-compute-commons/issues/new?template=design-critique.yml)
+for questions, design objections, spec ambiguities, and reports of overstated claims. Use the
+[candidate public need form](https://github.com/dlxeva/open-compute-commons/issues/new?template=candidate-public-need.yml)
+to test the draft against a safely described, public-interest need. State which file and section you
+are responding to, what you think is wrong or missing, and what result you would expect instead.
 
-**Pull requests** — for concrete edits. Keep them small and single-purpose. Before opening one:
+Do not put real task inputs, personal information, credentials, private links, or unpublished
+material in an Issue. Candidate needs must be described at a level that is safe to publish. A public,
+no-login primary-source link may be included only when it is necessary to explain an already-public
+need; never use a private share link or a link that grants access.
+
+**Pull requests** — for concrete edits. Keep them small and single-purpose. For any substantial
+change — including a new protocol mechanism, governance rule, schema family, or change to a safety
+boundary — open an Issue first and wait for the design direction to be discussed. External pull
+requests may be submitted, but submission does not imply review, acceptance, or merge. Before
+opening one:
 
 ```bash
 python3 -c "import json,pathlib; [json.loads(p.read_text(encoding='utf-8')) for p in pathlib.Path('.').rglob('*.json')]; print('json ok')"
@@ -102,6 +119,9 @@ submit anything you would not be comfortable releasing under that license, and s
 have licensing constraints.
 
 **Inbound contribution terms are still pending.** The exact mechanism for accepting contributions —
-DCO sign-off, a CLA, or inbound=outbound — is **not yet decided** (see `LICENSE_OPTIONS.md`). Until
-that is finalized, contributions are understood as inbound=outbound by default pending a formal
-decision, but no DCO or CLA requirement is in force yet.
+DCO sign-off, a CLA, or a formally adopted inbound=outbound policy — is **not yet decided** (see
+`LICENSE_OPTIONS.md`). Until that is finalized, the repository's working treatment is
+inbound=outbound for the applicable file license above, and no DCO or CLA requirement is in force.
+This working treatment does not promise that a contribution will be accepted or merged. If those
+terms are not acceptable to you, open an Issue describing the concern without submitting proposed
+text or code.

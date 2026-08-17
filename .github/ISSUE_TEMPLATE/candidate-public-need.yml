@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: MIT
+name: Propose a candidate public need
+description: Test whether the draft could represent a safely described public-interest need.
+title: "[Candidate need] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form collects discussion material, not applications for compute, funding, or participation. No pilot, service, or allocation is being offered.
+
+        Issues are public. Do not include real task inputs, PII, credentials, private links, unpublished material, or anything that requires authorization to disclose. Describe the need at a safe, abstract level.
+  - type: checkboxes
+    id: public_safe
+    attributes:
+      label: Public-safety confirmation
+      description: Every item must be true before this proposal can be submitted.
+      options:
+        - label: This is a public discussion prompt, not a request for compute, funding, service, or participation.
+          required: true
+        - label: I have not included real datasets, documents, images, task inputs, or beneficiary records.
+          required: true
+        - label: I have not included PII, credentials, account identifiers, private links, or access-granting URLs.
+          required: true
+        - label: I have not included confidential, restricted, or unpublished material.
+          required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: Public-interest need
+      description: Describe the unmet need without naming private individuals or disclosing real task material.
+      placeholder: Who could benefit, and what broad outcome is missing?
+    validations:
+      required: true
+  - type: textarea
+    id: candidate_task
+    attributes:
+      label: Candidate task shape
+      description: Describe a hypothetical or sanitized task that could test the protocol. Do not attach or paste actual inputs.
+      placeholder: What would be produced, at a high level?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Observable acceptance condition
+      description: What could an independent reviewer check without private data or privileged access?
+    validations:
+      required: true
+  - type: dropdown
+    id: sensitivity
+    attributes:
+      label: Could the real version involve sensitive or restricted data?
+      description: OCC currently has no operating path for real or sensitive data. This answer is for design critique only.
+      options:
+        - No; it can be represented entirely with public or synthetic material
+        - Possibly; the protocol would need a stronger boundary before any real use
+        - Yes; this is likely outside the current L0-only boundary
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: What result would show OCC is the wrong mechanism?
+      description: Name a practical failure condition such as excessive coordination, ambiguous acceptance, or lack of adoption.
+    validations:
+      required: true
+  - type: textarea
+    id: public_sources
+    attributes:
+      label: Public context (optional)
+      description: Public, no-login primary-source links only. Never include a private link, unpublished material, credentials, or personal records.
+    validations:
+      required: false

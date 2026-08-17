@@ -1,34 +1,68 @@
 # Open Compute Commons (OCC) — Candidate Discussion Draft
 
-> **This repository is a discussion draft, not a running project.**
-> There is no platform, no pilot, no participants, no requester, and no compute being provided.
-> Everything here is a set of documents, JSON Schemas, and synthetic fixtures put forward
-> so that the idea can be criticized before anything is built.
+Open Compute Commons asks whether people can use AI tools they already control to help complete
+small, verifiable pieces of a public-interest task. A requester would publish one authorized task
+with explicit acceptance criteria. Contributors would claim pieces, use AI tools in environments
+they control, review the output, and submit it for automated checks and requester-led acceptance.
 
----
+The phase-one resource hypothesis is deliberately narrow: **participant-controlled personal usage
+windows**. OCC would coordinate work, not pool subscriptions. It would never receive a contributor's
+account, API key, login session, or quota. Allocated credits, API budgets, compute nodes, volunteer
+labour, and redeemable tokens are different resources with different risks; they are separated in
+[`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md).
 
-## What this is
+> **Current reality:** this is a published candidate discussion draft, not a running project or an
+> adopted standard. There is no organization, pilot, requester, participant pool, platform, or
+> compute supply. All examples and fixtures are synthetic. The documents describe a mechanism that
+> has not been tested.
 
-A candidate specification for how a "public compute action" *could* be structured:
-how a public-interest task would be split into independently checkable pieces, how those
-pieces would be claimed and delivered, how delivery would be validated, and how contribution
-would be recorded without inventing a fake impact score.
+## Who this is for
 
-The core artifacts are:
+This draft is for people who can test its assumptions before anyone builds around them:
 
-- an object model and four state machines (`spec/PROTOCOL_v0.2.md`),
-- a task-splitting methodology (`spec/TASK_SPLITTING_v0.1.md`),
-- a contribution-accounting contract (`spec/CONTRIBUTION_v0.1.md`),
-- JSON Schemas for the core objects (`schemas/core/`),
-- synthetic conformance fixtures and a stdlib-only checker (`conformance/`, `scripts/`).
+- public-interest project owners who understand what a useful, acceptable result would require;
+- practitioners in volunteer computing, distributed systems, AI operations, safety, privacy, and
+  open-source governance;
+- people who use AI tools and can identify where participant-controlled execution would fail in practice.
 
-## What this is **not** — read before anything else
+At this stage, this is not a call to donate accounts, credentials, data, money, or compute. It is a
+request for specific criticism of the proposed mechanism.
+
+**[Challenge the draft](https://github.com/dlxeva/open-compute-commons/issues/new?template=design-critique.yml)**
+
+## A hypothetical action
+
+Imagine that a community archive has 60 public-domain photographs and wants accessible descriptions
+for its website. The archive has confirmed that the images may be processed and published, and it
+defines a checklist for length, factual grounding, and prohibited identity guesses.
+
+An OCC action could split the collection into independently reviewable Units. A contributor might
+claim five Units, use an AI tool through their own account, correct the drafts, and submit structured
+results. File-level checks could reject malformed entries; the archive, or a reviewer it appoints,
+would decide whether each description is acceptable. OCC would receive the submitted result and
+minimal process evidence, but no login, API key, quota, private chat transcript, or device log.
+
+**This action does not exist.** No archive has made this request, no images have been authorized, no
+contributor has done the work, and no output has been accepted. The example only makes the proposed
+flow concrete.
+
+## What the repository contains
+
+- a [public proposal](PROPOSAL.md);
+- a [candidate object model and four state machines](spec/PROTOCOL_v0.2.md);
+- a [task-splitting methodology](spec/TASK_SPLITTING_v0.1.md);
+- a [contribution-accounting contract](spec/CONTRIBUTION_v0.1.md);
+- [JSON Schemas for part of the object model](schemas/core/);
+- [synthetic fixtures](conformance/) and a [standard-library checker](scripts/);
+- a [resource hypothesis](docs/RESOURCE_HYPOTHESIS.md) and a [record of known v0.2 contradictions](docs/ERRATA_v0.2.md).
+
+## What this is **not**
 
 | Claim someone might make | Reality |
 |---|---|
 | "OCC is an organization / NGO" | **No.** No legal entity exists, none has been registered or applied for. |
 | "There has been a pilot" | **No.** No pilot has run. No task has ever been claimed, executed, or accepted. |
-| "There are participants / contributors" | **No.** Nobody has been recruited. There are no contributors and no contribution ledger. |
+| "There are operational participants" | **No.** Nobody has been recruited for an OCC action, no action has run, and no action-level contribution ledger exists. Repository authors and reviewers are documentation contributors only. |
 | "There is a requester with real data" | **No.** No requester, no authorized dataset, no beneficiary. |
 | "There is a Control Plane / API / Runner / MCP adapter" | **No.** None of these are implemented. The repository is files on disk. |
 | "OCC provides compute" | **No.** No compute is provided, purchased, donated, or brokered. |
@@ -36,22 +70,25 @@ The core artifacts are:
 | "The examples are public-benefit output" | **No.** Every fixture and example is `synthetic: true` placeholder content with no use value to anyone. |
 | "This is endorsed by some institution" | **No.** No institution has reviewed, approved, or endorsed any of this. |
 
-The conformance profile currently reached is **C0 (document-conformant)**. C1–C3 are **not** reached,
-because there is no runtime to be conformant with. See `spec/PROTOCOL_v0.2.md` §10 and
-`docs/CONFORMANCE_REPORT.md`.
+The protocol labels the repository **C0 (document-conformant)**. This is a category defined by the
+candidate draft, not an independent certification. C1–C3 are not claimed. Read
+[`docs/ERRATA_v0.2.md`](docs/ERRATA_v0.2.md) before relying on any conformance language.
 
 ## Where to start reading
 
 | Order | File | Why |
 |---|---|---|
-| 1 | `PROPOSAL.md` | The idea in plain terms, and its declared limits. |
-| 2 | `spec/PROTOCOL_v0.2.md` | Object model, state machines, validation layers, error codes, security model. |
-| 3 | `spec/TASK_SPLITTING_v0.1.md` | Why Unit / Shard / Attempt are three separate atoms. |
-| 4 | `spec/CONTRIBUTION_v0.1.md` | Why there is deliberately no unified score. |
-| 5 | `examples/synthetic-action/` | What a task package looks like as files. |
-| 6 | `docs/CONFORMANCE_REPORT.md` | What the local checker does and, more importantly, what it does not do. |
+| 1 | [`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md) | What "contributing compute" could mean, and the one resource type considered in phase one. |
+| 2 | [`PROPOSAL.md`](PROPOSAL.md) | The idea in plain terms, and its declared limits. |
+| 3 | [`docs/ERRATA_v0.2.md`](docs/ERRATA_v0.2.md) | Confirmed contradictions in the current public draft. Read this before the protocol. |
+| 4 | [`spec/PROTOCOL_v0.2.md`](spec/PROTOCOL_v0.2.md) | Candidate object model, state machines, validation layers, error codes, and security model. |
+| 5 | [`spec/TASK_SPLITTING_v0.1.md`](spec/TASK_SPLITTING_v0.1.md) | Why Unit / Shard / Attempt are three separate atoms. |
+| 6 | [`spec/CONTRIBUTION_v0.1.md`](spec/CONTRIBUTION_v0.1.md) | Why there is deliberately no unified score. |
+| 7 | [`examples/synthetic-action/`](examples/synthetic-action/) | A file-only, synthetic illustration of a task package. |
+| 8 | [`docs/CONFORMANCE_REPORT.md`](docs/CONFORMANCE_REPORT.md) | What the local checker does and, more importantly, what it does not do. |
 
-Supporting documents: `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE_OPTIONS.md`, `PUBLISH_CHECKLIST.md`.
+Supporting documents: [contribution guide](CONTRIBUTING.md), [security policy](SECURITY.md),
+[license decision record](LICENSE_OPTIONS.md), and [publication checklist](PUBLISH_CHECKLIST.md).
 
 ## Licensing: MIT
 
@@ -86,10 +123,10 @@ in lockstep and **MAY** lag behind the English version.
 | [`examples/synthetic-action/instructions.md`](examples/synthetic-action/instructions.md) | [`examples/synthetic-action/i18n/zh-CN/instructions.md`](examples/synthetic-action/i18n/zh-CN/instructions.md) |
 | [`schemas/core/README.md`](schemas/core/README.md) | [`schemas/core/i18n/zh-CN/README.md`](schemas/core/i18n/zh-CN/README.md) |
 
-Documents not listed above (`PROPOSAL.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE_OPTIONS.md`,
-`PUBLISH_CHECKLIST.md`) have no Chinese mirror. The "中文摘要" section at the end of this README is a
-summary, not a mirror of the full English text above it. Translating the remaining documents is an
-open item; see `CONTRIBUTING.md`.
+Documents not listed above (`PROPOSAL.md`, `docs/RESOURCE_HYPOTHESIS.md`, `docs/ERRATA_v0.2.md`,
+`CONTRIBUTING.md`, `SECURITY.md`, `LICENSE_OPTIONS.md`, and `PUBLISH_CHECKLIST.md`) have no Chinese
+mirror. The "中文摘要" section at the end of this README is a summary, not a mirror of the full English
+text above it. Translating the remaining documents is an open item; see `CONTRIBUTING.md`.
 
 Licensing is unchanged by language: every file, including Chinese mirrors, is covered by the MIT
 License.
@@ -143,9 +180,10 @@ Two kinds of hashes appear in `examples/synthetic-action/`, and they are not equ
 
 **这是一份候选讨论稿，不是已运行的项目。**
 
-Open Compute Commons（OCC）设想把分散的 AI 使用窗口和机构可捐赠的算力额度，
-组织成一次次有明确验收标准的公共任务行动。本仓库只包含这个设想的**文档、JSON Schema
-和合成样例**，用于在动手之前接受批评。
+Open Compute Commons（OCC）想验证：个人是否能在不交出账号、密钥或订阅额度的前提下，
+用自己控制的 AI 工具完成公益任务中可独立验收的小单元。第一阶段只讨论这种
+**个人自主控制的 AI 使用窗口**；credits / API 预算、算力节点、志愿劳动与可兑换 token 是不同资源，
+不能混为一谈。本仓库只包含这个设想的**文档、JSON Schema 和合成样例**，用于在动手之前接受批评。
 
 必须说清楚的边界：
 
@@ -159,10 +197,12 @@ Open Compute Commons（OCC）设想把分散的 AI 使用窗口和机构可捐�
   是占位数据，对任何人都没有使用价值，**不构成公益成果**。
 - **未获任何机构背书**。
 
-当前一致性档次为 **C0（文档一致）**；C1–C3 均未达成，因为没有运行时可供一致。
+协议把本仓库标为 **C0（文档一致）**；这是候选协议自行定义的类别，不是独立认证。
+当前已确认的内部矛盾见 `docs/ERRATA_v0.2.md`，C1–C3 未被主张。
 
-阅读顺序：`PROPOSAL.md` → `spec/PROTOCOL_v0.2.md` → `spec/TASK_SPLITTING_v0.1.md`
-→ `spec/CONTRIBUTION_v0.1.md` → `examples/synthetic-action/` → `docs/CONFORMANCE_REPORT.md`。
+阅读顺序：`docs/RESOURCE_HYPOTHESIS.md` → `PROPOSAL.md` → `docs/ERRATA_v0.2.md`
+→ `spec/PROTOCOL_v0.2.md` → `spec/TASK_SPLITTING_v0.1.md` → `spec/CONTRIBUTION_v0.1.md`
+→ `examples/synthetic-action/` → `docs/CONFORMANCE_REPORT.md`。
 
 本地验证命令见上文 "Verify it locally"。校验通过只说明**磁盘上的文件自洽**，
 不说明任何系统正确运行——因为没有系统。

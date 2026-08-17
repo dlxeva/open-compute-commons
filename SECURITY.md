@@ -33,8 +33,9 @@ worthless if credentials leak into the repository through a fixture or a bug rep
 
 **If you have already pushed a secret**: treat it as compromised. Rotate or revoke it immediately at
 the issuing provider — that is the only action that actually helps. Rewriting git history does not
-un-leak a value. Then tell the maintainers so the content can be removed, and say **what kind** of
-credential it was without pasting it again.
+un-leak a value. Then use the public reporting process below so the content can be removed: identify
+only the file or public Issue/PR location and the **kind** of credential. Never paste, quote, or link
+to the value again.
 
 ## Report these
 
@@ -86,13 +87,20 @@ restating them are welcome:
 
 ## How to report
 
-**Security reports: public GitHub Issues only (for now).** This was decided for publication
-(see `PUBLISH_CHECKLIST.md`). There is **no private channel** and no GitHub security advisory enabled
-at this time. If private vulnerability reporting is enabled later, this file will be updated to match.
+**Security reports: public GitHub Issues only (for now).** Use the
+[design critique form](https://github.com/dlxeva/open-compute-commons/issues/new?template=design-critique.yml)
+and select the safety/privacy/security area. This was decided for publication (see
+`PUBLISH_CHECKLIST.md`). There is **no private reporting channel**, no security email address, and no
+GitHub private vulnerability reporting or security advisory intake enabled at this time. Do not send
+or attempt to send confidential details through any other channel.
 
-Do not send anything you would not be willing to have read publicly, and above all do not paste a
-secret into a public issue in order to report it — describe its type and location instead. Enabling
-private reporting later remains a possibility; the absence of a private channel today is a deliberate
-current choice, not a permanent constraint.
+Only report what can safely be public. Do not include real data, PII, credentials, private links, or
+unpublished material, and above all do not paste a secret into a public Issue in order to report it —
+describe its type and public repository location instead. If a report cannot be safely described
+without confidential material, do not submit that material to this project while no private channel
+exists. Take any necessary containment action with the affected provider or data owner instead.
+
+Enabling private reporting later remains a possibility; the absence of a private channel today is a
+deliberate current choice, not a permanent constraint.
 
 There is no bug bounty, no severity SLA, and no guaranteed response time.

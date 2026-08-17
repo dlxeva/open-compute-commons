@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+name: Challenge the draft
+description: Identify a broken assumption, unsafe boundary, ambiguity, or missing falsification test.
+title: "[Design critique] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        OCC is a candidate specification, not an operating project. Issues are public.
+
+        Do not include real task inputs, personal information (PII), credentials, private links, or unpublished material. Describe only what is safe for anyone to read.
+  - type: checkboxes
+    id: public_safe
+    attributes:
+      label: Public-safety confirmation
+      description: Every item must be true before this report can be submitted.
+      options:
+        - label: I have not included real data or real task inputs.
+          required: true
+        - label: I have not included PII, names, emails, account identifiers, or private transcripts.
+          required: true
+        - label: I have not included credentials, tokens, secrets, private links, or access-granting URLs.
+          required: true
+        - label: I have not included confidential, private, or unpublished material.
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Resource and donation hypothesis
+        - Protocol or state machine
+        - Safety, privacy, or security
+        - Governance or trust
+        - Schema or conformance fixture
+        - Documentation or claim boundary
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Affected location
+      description: Name the repository file and section, schema, or fixture when possible.
+      placeholder: "Example: spec/PROTOCOL_v0.2.md section 9.3"
+    validations:
+      required: true
+  - type: textarea
+    id: critique
+    attributes:
+      label: What appears wrong or missing?
+      description: State one concrete objection. Do not paste real data, PII, credentials, private links, or unpublished material.
+      placeholder: Describe the assumption, ambiguity, unsafe path, or overstated claim.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What would a better rule or outcome look like?
+      description: A proposed direction is enough; implementation is not required.
+    validations:
+      required: true
+  - type: textarea
+    id: falsification
+    attributes:
+      label: How could this be tested or falsified?
+      description: Use synthetic examples or publicly describable reasoning only. Do not include private links or unpublished evidence.
+    validations:
+      required: false
+  - type: textarea
+    id: public_sources
+    attributes:
+      label: Public sources (optional)
+      description: Primary sources only, accessible without login. Never add a private share link, unpublished document, or link that grants access.
+    validations:
+      required: false

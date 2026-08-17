@@ -66,7 +66,8 @@ and `README.md` for the scope.
 - Discussions: **disabled.**
 - Pull requests: accepted at this stage (review draft), subject to the no-secret / synthetic-only
   rules.
-- Issue templates should repeat the "no real data, no credentials, no PII" rule at submission.
+- The Issue forms repeat the "no real data, no credentials, no PII, no private links, no unpublished
+  material" rule at submission (`.github/ISSUE_TEMPLATE/`).
 
 `CONTRIBUTING.md` tells readers to open issues, which is consistent with Issues being enabled.
 
@@ -83,7 +84,10 @@ Independent of the gates, a human should confirm:
 - [x] All example and fixture content is marked `synthetic: true`; nothing real or unauthorized.
 - [x] No claim implying an organization, pilot, participant, requester, endorsement, funding, or
   delivered compute exists. Spot-check `README.md`, `PROPOSAL.md`, and `spec/PROTOCOL_v0.2.md`.
-- [x] No external links beyond license/SPDX references and standards citations the spec needs.
+- [x] No unsafe or unverified external links. Repository-owned Issue-form links are allowed; a
+  candidate-need Issue may cite a directly relevant primary source only when it is public and
+  accessible without login. Private shares, access-granting URLs, and unpublished material remain
+  prohibited.
 - [x] Unverified research or prior-art claims are marked `TODO: unverified` (none are asserted in
   this candidate).
 - [x] `spec/PROTOCOL_v0.2.md` §13 correctly describes which earlier files are *absent* from this
