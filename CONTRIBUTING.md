@@ -110,19 +110,13 @@ roster yet (see `PUBLISH_CHECKLIST.md`).
 
 ## Licensing of contributions
 
-**The repository license is now decided** as a dual-license boundary:
+**The repository is licensed uniformly under the MIT License**. It applies to all documentation,
+code, JSON Schemas, machine-readable fixtures, validation scripts, examples, and language mirrors.
+See [`LICENSE`](LICENSE) for the full text.
 
-- **Documentation and prose** (e.g. `README.md`, `PROPOSAL.md`, `spec/**/*.md`, `docs/**/*.md`,
-  `schemas/core/**/*.md`, `examples/synthetic-action/**/*.md`, `CONTRIBUTING.md`, `SECURITY.md`)
-  are licensed under **CC BY 4.0** — see
-  [`LICENSE-DOCS.md`](LICENSE-DOCS.md).
-- **Code, JSON Schemas, machine-readable fixtures, and validation scripts** (e.g.
-  `schemas/core/*.json`, `conformance/**/*.json`, `examples/synthetic-action/*.json`,
-  `scripts/*.py`) are licensed under **Apache-2.0** — see [`LICENSE`](LICENSE).
-
-By submitting a contribution you agree it may be distributed under the applicable license above for
-the file type it touches. Please do not submit anything you would not be comfortable releasing under
-that license, and say in your PR if you have licensing constraints.
+By submitting a contribution you agree it may be distributed under the MIT License. Please do not
+submit anything you would not be comfortable releasing under that license, and say in your PR if you
+have licensing constraints.
 
 **Inbound contribution terms are still pending.** The exact mechanism for accepting contributions —
 DCO sign-off, a CLA, or a formally adopted inbound=outbound policy — is **not yet decided** (see

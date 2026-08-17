@@ -90,27 +90,18 @@ candidate draft, not an independent certification. C1–C3 are not claimed. Read
 Supporting documents: [contribution guide](CONTRIBUTING.md), [security policy](SECURITY.md),
 [license decision record](LICENSE_OPTIONS.md), and [publication checklist](PUBLISH_CHECKLIST.md).
 
-## Licensing — dual license, by file type
+## Licensing: MIT
 
-This repository is published under **two** licenses, split by file type. The
-boundary is fixed and stated here so there is no ambiguity:
+This repository is licensed uniformly under the MIT License. It applies to all repository content,
+including documentation, code, JSON Schemas, fixtures, validation scripts, examples, and language
+mirrors.
 
-| License | Applies to |
-|---|---|
-| **CC BY 4.0** (documentation) | `README.md`, `PROPOSAL.md`, `spec/**/*.md`, `docs/**/*.md`, `CONTRIBUTING.md`, `SECURITY.md`, `PUBLISH_CHECKLIST.md`, `LICENSE_OPTIONS.md`, `LICENSE-DOCS.md`, `examples/synthetic-action/**/*.md`, `schemas/core/**/*.md` |
-| **Apache-2.0** (code / schema / fixture) | `schemas/core/*.json`, `conformance/**/*.json`, `examples/synthetic-action/*.json`, `scripts/*.py` |
+- Full text: `LICENSE`.
+- SPDX identifier: `MIT`.
 
-- Full text of Apache-2.0: `LICENSE`.
-- Full text of CC BY 4.0: `LICENSE-DOCS.md`.
-- The boundary is drawn by file extension, with no exception for Markdown: the Markdown files inside
-  `examples/synthetic-action/` are documentation (CC BY 4.0) even where they also describe a data
-  contract, and the JSON files there are fixtures (Apache-2.0). A file's own
-  `SPDX-License-Identifier` header, if present, governs for that file.
-
-Attribution under CC BY 4.0 should credit the repository (`dlxeva/open-compute-commons`) and must not
-imply endorsement by, or affiliation with, any institution. No institution has reviewed or endorsed
-this material, and no legal entity exists behind it. All examples and fixtures are `synthetic: true`
-placeholder content.
+The repository is published as `dlxeva/open-compute-commons` from a personal account. No institution
+has reviewed or endorsed this material, and no legal entity exists behind it. All examples and
+fixtures are `synthetic: true` placeholder content.
 
 ## Language policy
 
@@ -137,8 +128,8 @@ Documents not listed above (`PROPOSAL.md`, `docs/RESOURCE_HYPOTHESIS.md`, `docs/
 mirror. The "中文摘要" section at the end of this README is a summary, not a mirror of the full English
 text above it. Translating the remaining documents is an open item; see `CONTRIBUTING.md`.
 
-Licensing is unchanged by language: a Chinese mirror carries the same license as the English file it
-mirrors (`i18n/zh-CN/*.md` are documentation, CC BY 4.0).
+Licensing is unchanged by language: every file, including Chinese mirrors, is covered by the MIT
+License.
 
 ## Verify it locally
 
@@ -216,11 +207,8 @@ Open Compute Commons（OCC）想验证：个人是否能在不交出账号、密
 本地验证命令见上文 "Verify it locally"。校验通过只说明**磁盘上的文件自洽**，
 不说明任何系统正确运行——因为没有系统。
 
-关于许可证：本仓库采用**双许可证**，按文件类型划分。文档（README、PROPOSAL、spec/\*.md、
-docs/\*.md、CONTRIBUTING、SECURITY、PUBLISH_CHECKLIST、LICENSE_OPTIONS、examples/synthetic-action/\*.md）
-适用 **CC BY 4.0**，全文见 `LICENSE-DOCS.md`；代码/Schema/fixture
-（schemas/core/\*.json、conformance/\*\*/\*.json、examples/synthetic-action/\*.json、scripts/\*.py）
-适用 **Apache-2.0**，全文见 `LICENSE`。
+关于许可证：本仓库所有文件统一采用 **MIT License**，文档、代码、Schema、fixture、验证脚本、
+示例和语言镜像均适用。完整文本见 `LICENSE`。
 
 仓库 owner/slug 已确认为 `dlxeva/open-compute-commons`，公开（public），Issues 已启用，Discussions
 已禁用，无公开邮箱。安全报告暂采用 public GitHub Issues only，保留以后启用 private reporting 的可能。
