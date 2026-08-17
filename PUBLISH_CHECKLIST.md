@@ -34,11 +34,11 @@ even if a repository is later deleted or made private. Treat these as gates, not
 
 ## Gate 4 — License
 
-**Decided: dual license, split by file type.** See `LICENSE_OPTIONS.md` for the decision record and
-`README.md` for the fixed boundary.
+**Decided: MIT License for the entire repository.** See `LICENSE_OPTIONS.md` for the decision record
+and `README.md` for the scope.
 
-- Documentation / prose → **CC BY 4.0** (`LICENSE-DOCS.md`).
-- Code / JSON Schemas / fixtures → **Apache-2.0** (`LICENSE`).
+- Documentation, code, JSON Schemas, fixtures, scripts, examples, and language mirrors → **MIT**
+  (`LICENSE`).
 - Inbound contribution terms (DCO / CLA / inbound=outbound) remain an open follow-up.
 
 ## Gate 5 — Maintainers and contact point
