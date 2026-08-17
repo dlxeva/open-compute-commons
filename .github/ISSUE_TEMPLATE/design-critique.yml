@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 name: Challenge the draft
 description: Identify a broken assumption, unsafe boundary, ambiguity, or missing falsification test.
 title: "[Design critique] "

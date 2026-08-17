@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 name: Propose a candidate public need
 description: Test whether the draft could represent a safely described public-interest need.
 title: "[Candidate need] "
