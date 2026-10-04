@@ -88,6 +88,11 @@ following occurs:
    verified, or converting activity into an unsupported impact claim.
 8. Preventing foreseeable abuse would require a hosted runtime, identity collection, or sensitive
    data handling that the phase-one model does not provide.
+9. Within the first two weeks of a test, actual participation or retention among invited volunteers
+   falls below a threshold declared in advance in the pilot brief. This is the "incentive vacuum"
+   condition: non-monetary, non-ranking recognition (`spec/CONTRIBUTION_v0.1.md` §6.1–§6.3) does not
+   sustain enough participation. The threshold must be written down before the test starts, not
+   chosen afterwards.
 
 These are failure conditions, not success claims or target values. The repository currently has no
 measurement against any of them.
