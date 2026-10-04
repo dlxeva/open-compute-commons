@@ -122,7 +122,9 @@ MUST NOT：包含参与者的第三方账号 ID、邮箱、API Key。`contributo
 
 必备（MUST）：`attempt_id`、`claim_id`、`status`、`started_at`。
 
-SHOULD：`finished_at`、`self_reported_usage`（自报用量，见 §8.4）、`execution_environment`（自报的执行环境类别，非设备指纹）。
+SHOULD：`finished_at`、`self_reported_usage`（自报用量，见 §8.4）、`execution_environment`（自报的执行环境类别，非设备指纹）、`model_setup`（自报、只作记录的产出方式说明，见 §8.2.1）。
+
+规则：在真实 Action 中，每个 Attempt **MUST** 在 `model_setup.locus` 中声明推理位置（§8.2.1）。Schema 中 `model_setup` 保持可选，以便早先的合成 fixture 仍然有效。
 
 规则：用量数据 **MUST** 被标注为 `self_reported`，实现 **MUST NOT** 将其呈现为已核实的计量。
 
@@ -441,10 +443,22 @@ raised → triage → (resolved_upheld | resolved_overturned | resolved_partial 
 | `third_party_inference_possible` | MUST | 是否可能调用第三方模型服务 |
 | `account_custody` | MUST | 固定值 `participant_self_custody`（见 §9.3） |
 | `allowed_tooling` | SHOULD | 允许的工具类别 |
-| `reproducibility_requirements` | SHOULD | 是否要求记录模型/参数 |
+| `reproducibility_requirements` | SHOULD | 除推理位置外，请参与者记录哪些模型/参数信息（只是请求，绝不作为验收条件；§8.2.1） |
 | `usage_reporting` | SHOULD | 自报用量的粒度 |
 
-**关键澄清（沿用并强化 v0.1）**：参与者在**自己控制的环境**中发起执行。模型推理**可能发生在第三方服务端**。参与者 **MUST** 自行确认所用第三方服务的服务条款、数据政策与额度限制。项目 **MUST NOT** 代管账号、**MUST NOT** 自动调用个人订阅、**MUST NOT** 声称"本地推理"。
+**关键澄清（本稿修订）**：参与者在**自己控制的环境**中发起执行，使用自己选择的工具：本地模型、自己安排并付费的第三方模型服务，或完全不用模型。协议不限制这一选择。模型推理**可能发生在第三方服务端**。参与者 **MUST** 自行确认所用第三方服务的服务条款、数据政策与额度限制；这一责任在参与者与其服务提供方之间，不在本协议之内。项目 **MUST NOT** 代管账号、**MUST NOT** 自动调用个人订阅。
+
+#### 8.2.1 推理位置：只记录，不限制
+
+- 每个 Attempt **MUST** 在 `model_setup.locus`（§2.7）中如实声明推理位置，取值为以下之一：
+  - `participant_local`：模型推理在参与者自己控制的硬件上运行；
+  - `third_party_api`：模型推理在参与者自选、按自己的安排使用的第三方模型服务（API 或托管产品）上运行；
+  - `mixed`：以上多种方式共同参与了该 Attempt；
+  - `manual`：产出结果时没有使用模型推理。
+- 推理位置属于自报信息（§8.4），记录它**只是**为了让审核者判断复跑结果（§5.3）是否独立产生。它 **MUST NOT** 用于接受、拒绝、排名或排除某个 Submission 或参与者；Action **MUST NOT** 要求或禁止某种推理位置。
+- 项目在无法核实时，**MUST NOT** 对外宣称推理是在本地完成的（无论针对 Attempt、Shard、Action 还是 Release）。自报的 `participant_local` 不等于核实。这条 **MUST NOT** 是防虚假宣称的规则：它不禁止参与者使用本地模型，也不禁止参与者如实声明自己用了本地模型。
+- 推理位置是最低限度的记录。更多细节（`model_family`、`model_version`、`quantization`、`prompt_template_ref`）均为**可选**，粒度由参与者自定，Action **MUST NOT** 把它们作为验收条件。`model_setup` **MUST NOT** 包含账号标识、API Key、邮箱、计费或套餐信息、会话数据。
+- `execution_policy` 有意**不设**单一的 `inference_locus` 字段。推理位置是每个 Attempt 的属性：在 Action 层设一个值，要么成了对参与者工具的限制，要么成了项目无法核实的、覆盖所有 Attempt 的笼统宣称。Action 层的披露仍由 `third_party_inference_possible` 承担。
 
 ### 8.3 入口形态：Web/CLI 基础，MCP 可选
 
@@ -475,7 +489,7 @@ raised → triage → (resolved_upheld | resolved_overturned | resolved_partial 
                     ▼
 ┌────────────────────── Execution Plane ──────────────────────┐
 │ 参与者自有环境 / 机构受控环境                                 │
-│ 持有：参与者自己的账号与额度、实际推理调用                     │
+│ 持有：参与者自己的工具与模型、实际推理调用                     │
 │ MUST 由参与者或机构自己控制，MUST NOT 由项目代管               │
 └──────────────────────────────────────────────────────────────┘
 ```

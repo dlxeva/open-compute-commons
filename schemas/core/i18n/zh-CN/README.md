@@ -20,7 +20,7 @@ v0.1 时期的探索，尚未审阅，不适合作为公开讨论的起点。本
 | `unit.schema.json` | Unit | **验收原子** |
 | `shard.schema.json` | Shard | **认领原子** |
 | `claim.schema.json` | Claim | 租约（lease / timeout） |
-| `attempt.schema.json` | Attempt | **执行计量原子** |
+| `attempt.schema.json` | Attempt | **执行计量原子**；可选、只作记录的 `model_setup` |
 | `submission.schema.json` | Submission | 交付；含 `definitions/unit_result` |
 | `validation.schema.json` | Validation | 四层验证之一层 |
 | `contribution_record.schema.json` | ContributionRecord | 记账条目 |

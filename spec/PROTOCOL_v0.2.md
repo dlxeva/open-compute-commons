@@ -125,7 +125,9 @@ The **execution-metering atom**. One actual execution attempt. A single Claim **
 
 Required (MUST): `attempt_id`, `claim_id`, `status`, `started_at`.
 
-SHOULD: `finished_at`, `self_reported_usage` (self-reported usage; see §8.4), `execution_environment` (self-reported category of execution environment, not a device fingerprint).
+SHOULD: `finished_at`, `self_reported_usage` (self-reported usage; see §8.4), `execution_environment` (self-reported category of execution environment, not a device fingerprint), `model_setup` (self-reported, record-only description of how the result was produced; see §8.2.1).
+
+Rule: in a real Action, every Attempt **MUST** declare its inference locus in `model_setup.locus` (§8.2.1). The schema keeps `model_setup` optional so that earlier synthetic fixtures remain valid.
 
 Rule: usage data **MUST** be labelled `self_reported`, and implementations **MUST NOT** present it as verified metering.
 
@@ -444,10 +446,22 @@ Rules:
 | `third_party_inference_possible` | MUST | Whether a third-party model service may be called |
 | `account_custody` | MUST | Fixed value `participant_self_custody` (see §9.3) |
 | `allowed_tooling` | SHOULD | Permitted categories of tooling |
-| `reproducibility_requirements` | SHOULD | Whether model/parameters must be recorded |
+| `reproducibility_requirements` | SHOULD | What participants are asked to record about model/parameters beyond the inference locus (a request, never an acceptance condition; §8.2.1) |
 | `usage_reporting` | SHOULD | Granularity of self-reported usage |
 
-**Key clarification (carried over from and strengthened relative to v0.1)**: participants initiate execution in **environments they themselves control**. Model inference **may take place on third-party servers**. Participants **MUST** verify for themselves the terms of service, data policies and quota limits of the third-party services they use. The project **MUST NOT** take custody of accounts, **MUST NOT** automatically invoke personal subscriptions, and **MUST NOT** claim "local inference".
+**Key clarification (revised in this draft)**: participants initiate execution in **environments they themselves control**, with tools they choose: a local model, a third-party model service they arrange and pay for themselves, or no model at all. The protocol does not restrict that choice. Model inference **may take place on third-party servers**. Participants **MUST** verify for themselves the terms of service, data policies and quota limits of the third-party services they use; that responsibility sits between the participant and their provider, not in this protocol. The project **MUST NOT** take custody of accounts and **MUST NOT** automatically invoke personal subscriptions.
+
+#### 8.2.1 Inference locus: record, never restrict
+
+- Each Attempt **MUST** declare its inference locus honestly, in `model_setup.locus` (§2.7), as one of:
+  - `participant_local`: model inference ran on hardware the participant controls;
+  - `third_party_api`: model inference ran on a third-party model service (an API or hosted product) that the participant chose and uses under their own arrangement;
+  - `mixed`: more than one of the above contributed to the Attempt;
+  - `manual`: no model inference was used to produce the result.
+- The locus is self-reported (§8.4). It is recorded **only** so that reviewers can judge whether replicated results (§5.3) were produced independently. It **MUST NOT** be used to accept, reject, rank or exclude a Submission or a participant, and an Action **MUST NOT** require or forbid a particular locus.
+- The project **MUST NOT** publicly claim that inference was local (for an Attempt, Shard, Action or Release) unless it can verify that claim. A self-reported `participant_local` is not verification. This **MUST NOT** is an anti-false-claim rule: it does not prohibit participants from using local models, or from declaring honestly that they did.
+- The locus is the minimum record. Further details (`model_family`, `model_version`, `quantization`, `prompt_template_ref`) are **OPTIONAL**, given at whatever granularity the participant chooses, and an Action **MUST NOT** make them a condition of acceptance. `model_setup` **MUST NOT** contain account identifiers, API keys, email addresses, billing or plan information, or session data.
+- `execution_policy` deliberately has **no** single `inference_locus` field. The locus is a property of each Attempt: an Action-level value would be either a restriction on participants' tools or a blanket claim about every Attempt that the project cannot verify. `third_party_inference_possible` remains the Action-level disclosure.
 
 ### 8.3 Entry point: Web/CLI as the base, MCP optional
 
@@ -479,7 +493,7 @@ Usage fields **MUST** be labelled `self_reported: true`. Implementations **MUST 
         ▼
 ┌────────────────────── Execution Plane ──────────────────────┐
 │ Participant's own environment / institution-controlled env  │
-│ Holds: participant's own accounts and quota, actual calls   │
+│ Holds: participant's own tools and models, actual calls     │
 │ MUST be controlled by participant or institution;           │
 │ MUST NOT be held in custody by the project                  │
 └──────────────────────────────────────────────────────────────┘

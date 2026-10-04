@@ -36,6 +36,29 @@
       },
       "additionalProperties": false
     },
+    "model_setup": {
+      "type": "object",
+      "description": "Self-reported, record-only description of how the result was produced (spec/PROTOCOL_v0.2.md §8.2.1). Used only to judge whether replicated results were independent; never a restriction or an acceptance condition. Only locus is required; every other field is optional and at the participant's chosen granularity. MUST NOT contain account identifiers, API keys, email addresses, billing or plan information, or session data.",
+      "required": ["locus", "self_reported"],
+      "properties": {
+        "locus": {
+          "type": "string",
+          "enum": ["participant_local", "third_party_api", "mixed", "manual"],
+          "description": "Inference locus, declared honestly. A self-reported participant_local is not verification; the project MUST NOT publicly claim local inference it cannot verify."
+        },
+        "self_reported": {
+          "type": "boolean",
+          "enum": [true],
+          "description": "Constant true. MUST NOT be presented as verified."
+        },
+        "model_family": { "type": "string", "description": "Optional. Model family at whatever granularity the participant chooses. Not an account, deployment or key identifier." },
+        "model_version": { "type": "string", "description": "Optional." },
+        "quantization": { "type": "string", "description": "Optional; mainly meaningful for participant_local." },
+        "prompt_template_ref": { "type": "string", "description": "Optional. Reference to a published prompt template (for example one shipped with the task package), not the full prompt or conversation." },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "failure_error_code": { "type": "string", "pattern": "^E_[A-Z_]+$" },
     "notes": { "type": "string" }
   },

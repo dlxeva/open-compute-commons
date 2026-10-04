@@ -23,7 +23,7 @@ the v0.1 period of exploration, has not been reviewed, and is not suitable as a 
 | `unit.schema.json` | Unit | **Acceptance atom** |
 | `shard.schema.json` | Shard | **Claim atom** |
 | `claim.schema.json` | Claim | Lease (lease / timeout) |
-| `attempt.schema.json` | Attempt | **Execution-metering atom** |
+| `attempt.schema.json` | Attempt | **Execution-metering atom**; optional record-only `model_setup` |
 | `submission.schema.json` | Submission | Delivery; contains `definitions/unit_result` |
 | `validation.schema.json` | Validation | One layer of the four-layer validation |
 | `contribution_record.schema.json` | ContributionRecord | Accounting entry |
