@@ -116,7 +116,10 @@ model service, one must assume both can see the inputs and outputs.
 This proposal does **not** assume any model provider has permitted this kind of collaboration, and
 does **not** claim different subscription products share usage rules. Any real action would have to
 check the applicable terms of service and data policies **before** launching.
-Current status of that check: **not done for any provider** (`spec/PROTOCOL_v0.2.md` §12.2).
+Current status: **no provider's terms have been checked against primary sources in this repository.**
+Pooling personal subscription quota is stopped, because prior research reported provider prohibitions
+(`TODO: unverified`); terms for a volunteer's own tools are the volunteer's responsibility
+(`docs/RESOURCE_HYPOTHESIS.md`, `spec/PROTOCOL_v0.2.md` §12.2).
 
 ## 7. Protocol layer
 

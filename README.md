@@ -5,10 +5,13 @@ small, verifiable pieces of a public-interest task. A requester would publish on
 with explicit acceptance criteria. Contributors would claim pieces, use AI tools in environments
 they control, review the output, and submit it for automated checks and requester-led acceptance.
 
-The phase-one resource hypothesis is deliberately narrow: **participant-controlled personal usage
-windows**. OCC would coordinate work, not pool subscriptions. It would never receive a contributor's
-account, API key, login session, or quota. Allocated credits, API budgets, compute nodes, volunteer
-labour, and redeemable tokens are different resources with different risks; they are separated in
+The phase-one resource hypothesis is deliberately narrow: **volunteers' own judgement and time, spent
+on small, independently verifiable units**. How a volunteer gets a unit done is up to them: their own
+local model, an API or compute they pay for themselves, or by hand. OCC would only receive results and
+verify them. It would never pool, collect, or transfer anyone's quota, accounts, keys, or compute, and
+it would ask volunteers only to record honestly what they used. Pooling personal subscription quota is
+stopped and out of scope. Allocated credits or requester-funded API budgets, compute nodes, and
+redeemable tokens are different resources with different risks; they are separated in
 [`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md).
 
 > **Current reality:** this is a published candidate discussion draft, not a running project or an
@@ -78,7 +81,7 @@ candidate draft, not an independent certification. C1–C3 are not claimed. Read
 
 | Order | File | Why |
 |---|---|---|
-| 1 | [`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md) | What "contributing compute" could mean, and the one resource type considered in phase one. |
+| 1 | [`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md) | What "contributing" could mean, and the one resource considered in phase one. |
 | 2 | [`PROPOSAL.md`](PROPOSAL.md) | The idea in plain terms, and its declared limits. |
 | 3 | [`docs/ERRATA_v0.2.md`](docs/ERRATA_v0.2.md) | Confirmed contradictions in the current public draft. Read this before the protocol. |
 | 4 | [`spec/PROTOCOL_v0.2.md`](spec/PROTOCOL_v0.2.md) | Candidate object model, state machines, validation layers, error codes, and security model. |
@@ -167,7 +170,7 @@ Two kinds of hashes appear in `examples/synthetic-action/`, and they are not equ
 2. Self-reported usage cannot be verified. Is recording it at all a mistake?
 3. Contribution accounting deliberately refuses a single score. Does anything remain that sustains participation?
 4. Public-track execution offers no confidentiality. Which task types survive that constraint?
-5. Do the terms of service of the model providers people would use actually permit this kind of collaboration? **This has not been checked with any provider** — see `spec/PROTOCOL_v0.2.md` §12.2.
+5. Terms-of-service responsibility for a volunteer's own tools stays with the volunteer, and pooling personal subscription quota is stopped (prior research reported provider prohibitions; **`TODO: unverified`**, not checked against primary sources here). Does this record-only, tool-agnostic position leave any terms risk with OCC itself? See [`docs/RESOURCE_HYPOTHESIS.md`](docs/RESOURCE_HYPOTHESIS.md) and `spec/PROTOCOL_v0.2.md` §12.2.
 6. Where is this design most likely to fail first?
 
 ---
@@ -180,10 +183,12 @@ Two kinds of hashes appear in `examples/synthetic-action/`, and they are not equ
 
 **这是一份候选讨论稿，不是已运行的项目。**
 
-Open Compute Commons（OCC）想验证：个人是否能在不交出账号、密钥或订阅额度的前提下，
-用自己控制的 AI 工具完成公益任务中可独立验收的小单元。第一阶段只讨论这种
-**个人自主控制的 AI 使用窗口**；credits / API 预算、算力节点、志愿劳动与可兑换 token 是不同资源，
-不能混为一谈。本仓库只包含这个设想的**文档、JSON Schema 和合成样例**，用于在动手之前接受批评。
+Open Compute Commons（OCC）想验证：能否把公益任务切成可独立验收的小单元，由志愿者各自完成。
+志愿者怎么完成由自己决定——用自己的本地模型、自己购买的 API 或算力，或者纯手工都可以；
+OCC 只接收结果并做验收，从不汇集、收集或转移任何人的额度、账号、密钥或算力，只要求如实记录用了什么。
+第一阶段的核心资源是**志愿者的判断和时间**；汇集个人订阅额度的路径已停止，不在范围内。
+机构分配的 credits 或需求方出资的 API 预算、算力节点与可兑换 token 是不同资源，不能混为一谈。
+本仓库只包含这个设想的**文档、JSON Schema 和合成样例**，用于在动手之前接受批评。
 
 必须说清楚的边界：
 
