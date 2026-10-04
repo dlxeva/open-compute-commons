@@ -599,7 +599,7 @@ Three categories, distinguished clearly and without hedging.
 | Real dispute rates and arbitration mechanisms | No operating experience |
 | Participant retention and scale | Nobody has been recruited |
 | What proportion automated acceptance can cover | Depends on task type; no data |
-| Whether third-party terms of service permit this kind of collaboration | **Not verified with any provider**; permission is not assumed |
+| Provider terms for volunteers' own tools | Responsibility rests with each volunteer for the tools they choose; the project neither assumes nor certifies permission. Pooling personal subscription quota is **stopped** (prior research reported provider prohibitions; `TODO: unverified`, not checked against primary sources in this repository). See `docs/RESOURCE_HYPOTHESIS.md` |
 | How arbitrators are selected | Undecided |
 
 ### 12.3 Blocked (clear preconditions, unmet)
