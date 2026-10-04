@@ -15,7 +15,7 @@ v0.1 时期的探索，尚未审阅，不适合作为公开讨论的起点。本
 
 | 文件 | 对象 | 角色 |
 |---|---|---|
-| `action.schema.json` | Action | 行动容器；含 data_policy / execution_policy |
+| `action.schema.json` | Action | 行动容器；含 data_policy / execution_policy / 可选的 adoption_commitment |
 | `task_definition.schema.json` | TaskDefinition | 冻结的任务语义与 acceptance_policy |
 | `unit.schema.json` | Unit | **验收原子** |
 | `shard.schema.json` | Shard | **认领原子** |

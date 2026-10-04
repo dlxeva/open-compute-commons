@@ -72,6 +72,8 @@ Event                (所有状态变更的 append-only 记录)
 
 SHOULD：`requester_ref`（需求方引用）、`coordinator_ref`、`acceptance_policy_ref`、`result_license`、`content_hash`。
 
+MAY：`adoption_commitment`，即需求方承诺（`docs/DEMAND_COMMITMENT.md`）。它在 schema 中是可选的，但真实 Action 在承诺不完整时 **MUST NOT** 被选入 pilot。
+
 MUST NOT：包含任何参与者账号标识、API Key、令牌、cookie 或凭据引用（§9.3）。
 
 ### 2.3 TaskDefinition
