@@ -56,6 +56,41 @@
       },
       "additionalProperties": false
     },
+    "adoption_commitment": {
+      "type": "object",
+      "description": "Optional demand-side commitment (docs/DEMAND_COMMITMENT.md). When present, all five items are required. Describe each item only at a publicly shareable level: roles, not personal names; public systems or pages, not private links. A candidate need missing any item is not selected. Stating a commitment is not impact evidence (spec/CONTRIBUTION_v0.1.md §3.3).",
+      "required": ["result_destination", "expected_publication", "acceptance_role", "adoption_signoff_role", "output_schema_signoff", "manual_baseline"],
+      "properties": {
+        "result_destination": { "type": "string", "minLength": 1, "description": "Item 1: where accepted results land (system, page, catalogue or dataset), at a publicly shareable level." },
+        "expected_publication": { "type": "string", "minLength": 1, "description": "Item 2: when results will be published or used, relative to acceptance (e.g. 'within 4 weeks after acceptance')." },
+        "acceptance_role": { "type": "string", "minLength": 1, "description": "Item 3a: the role that accepts units. A role, not a personal name." },
+        "adoption_signoff_role": { "type": "string", "minLength": 1, "description": "Item 3b: the role authorized to sign off adoption. A role, not a personal name." },
+        "output_schema_signoff": {
+          "type": "object",
+          "description": "Item 4: the requester's confirmation of the output schema.",
+          "required": ["output_schema_ref", "confirmed_by_role"],
+          "properties": {
+            "output_schema_ref": { "type": "string", "minLength": 1 },
+            "confirmed_by_role": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "manual_baseline": {
+          "type": "object",
+          "description": "Item 5: requester's own minutes per unit by hand, as a range with a basis level. Basis 'unknown' is not allowed: an unknown baseline counts as a missing item.",
+          "required": ["minutes_per_unit_p50", "basis"],
+          "properties": {
+            "minutes_per_unit_p50": { "type": "number", "minimum": 0 },
+            "minutes_per_unit_p90": { "type": "number", "minimum": 0 },
+            "basis": { "type": "string", "enum": ["measured", "calibrated", "assumed"] }
+          },
+          "additionalProperties": false
+        },
+        "recorded_at": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "notes": { "type": "string" }
   },
   "additionalProperties": false

@@ -119,6 +119,7 @@ in lockstep and **MAY** lag behind the English version.
 | [`spec/TASK_SPLITTING_v0.1.md`](spec/TASK_SPLITTING_v0.1.md) | [`spec/i18n/zh-CN/TASK_SPLITTING_v0.1.md`](spec/i18n/zh-CN/TASK_SPLITTING_v0.1.md) |
 | [`spec/CONTRIBUTION_v0.1.md`](spec/CONTRIBUTION_v0.1.md) | [`spec/i18n/zh-CN/CONTRIBUTION_v0.1.md`](spec/i18n/zh-CN/CONTRIBUTION_v0.1.md) |
 | [`docs/CONFORMANCE_REPORT.md`](docs/CONFORMANCE_REPORT.md) | [`docs/i18n/zh-CN/CONFORMANCE_REPORT.md`](docs/i18n/zh-CN/CONFORMANCE_REPORT.md) |
+| [`docs/DEMAND_COMMITMENT.md`](docs/DEMAND_COMMITMENT.md) | [`docs/i18n/zh-CN/DEMAND_COMMITMENT.md`](docs/i18n/zh-CN/DEMAND_COMMITMENT.md) |
 | [`examples/synthetic-action/README.md`](examples/synthetic-action/README.md) | [`examples/synthetic-action/i18n/zh-CN/README.md`](examples/synthetic-action/i18n/zh-CN/README.md) |
 | [`examples/synthetic-action/instructions.md`](examples/synthetic-action/instructions.md) | [`examples/synthetic-action/i18n/zh-CN/instructions.md`](examples/synthetic-action/i18n/zh-CN/instructions.md) |
 | [`schemas/core/README.md`](schemas/core/README.md) | [`schemas/core/i18n/zh-CN/README.md`](schemas/core/i18n/zh-CN/README.md) |

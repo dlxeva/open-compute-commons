@@ -18,7 +18,7 @@ the v0.1 period of exploration, has not been reviewed, and is not suitable as a 
 
 | File | Object | Role |
 |---|---|---|
-| `action.schema.json` | Action | Action container; contains data_policy / execution_policy |
+| `action.schema.json` | Action | Action container; contains data_policy / execution_policy / optional adoption_commitment |
 | `task_definition.schema.json` | TaskDefinition | Frozen task semantics and acceptance_policy |
 | `unit.schema.json` | Unit | **Acceptance atom** |
 | `shard.schema.json` | Shard | **Claim atom** |

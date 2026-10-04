@@ -75,6 +75,8 @@ Required fields (MUST): `action_id`, `version`, `status`, `title`, `purpose`, `d
 
 SHOULD: `requester_ref`, `coordinator_ref`, `acceptance_policy_ref`, `result_license`, `content_hash`.
 
+MAY: `adoption_commitment`, the demand-side commitment (`docs/DEMAND_COMMITMENT.md`). It is optional in the schema, but a real Action **MUST NOT** be selected for a pilot without a complete one.
+
 MUST NOT: contain any participant account identifier, API key, token, cookie or credential reference (§9.3).
 
 ### 2.3 TaskDefinition

@@ -160,7 +160,16 @@ A requester would have to supply:
 4. fixed execution instructions;
 5. quantifiable acceptance criteria;
 6. total and per-shard workload estimates;
-7. how results are owned and published;
+7. how results are owned and published, including the demand-side commitment in
+   `docs/DEMAND_COMMITMENT.md`:
+   - who owns the results and under which license;
+   - where accepted results will land (system, page, or dataset, at a publicly shareable level);
+   - when they will be published, relative to acceptance;
+   - which role accepts units and which role signs off adoption;
+   - the requester's sign-off on the output format;
+   - the requester's manual baseline (minutes per unit by hand, with a basis level).
+
+   If any part of the commitment is missing, the need is not selected;
 8. how failure, rework, and disputes are handled.
 
 Until these exist, the project stays at "collecting candidate cases" and does **not** enter an action.
