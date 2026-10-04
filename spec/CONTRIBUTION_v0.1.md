@@ -136,7 +136,7 @@ The cost of keeping them separate is that the ledger looks unattractive and cann
 |---|---|---|---|
 | `record_id` | MUST | string | Unique identifier |
 | `action_id` | MUST | string | The Action it belongs to |
-| `contributor_ref` | MUST | string | **Pseudonymous identifier**; MUST NOT be an email, account or real name |
+| `contributor_ref` | MUST | string | **Pseudonymous identifier**; MUST NOT be an email, account or real name. A voluntary display name for public credit is kept separately (§6.2) |
 | `track` | MUST | enum | `R`\|`E`\|`Q`\|`P`\|`S` |
 | `evidence_class` | MUST | enum | `activity`\|`quality`\|`impact` |
 | `subject_type` | MUST | enum | Type of the associated object (submission / validation / unit, etc.) |
@@ -242,13 +242,42 @@ If a public ledger interface exists in future:
 - It **MAY** provide a private view for participants to see their own history;
 - It **MUST NOT** publish an individual participant's quality ratios by default.
 
+### 6.1 Acknowledgement list
+
+Non-score recognition is the intended answer to "what sustains participation without points or a leaderboard". If an Action runs:
+
+- The coordinator **SHOULD** publish an acknowledgement list every two weeks while the Action is executing, and once more when it closes.
+- The list names the contributors who had at least one confirmed contribution (any track, §5) in that period **and** who opted in with a `credit_display_name` (§6.2). Contributors who did not opt in are not named; the list **MAY** add a line such as "and others who chose not to be named", without a number.
+- Names **MUST** be sorted alphabetically by display name, using a collation declared before the first list is published (for example, Unicode code-point order). The order **MUST NOT** depend on activity, quality, or any other measure.
+- The list **MUST NOT** show per-person counts, ratios, track totals, tiers, "top contributor" markers, or any other ranking. Being on the list means only "contributed in this period".
+- Each list **MUST** carry a short **"Where this data was used"** note. The note is impact evidence (§3.3): it **MUST** be supplied by the requester and shown with the declaring party, and **MUST NOT** be written by the project or by participants. When the requester has supplied nothing, the note **MUST** read `unclaimed`.
+- The list **MUST NOT** contain `contributor_ref` values, contact details, or any field forbidden in §4.2.
+
+### 6.2 Voluntary credit display name
+
+- `credit_display_name` is the name a contributor chooses to be credited under. It is **voluntary** (no one is listed by default), **revocable at any time**, and **MAY** be a real name or any handle the contributor chooses.
+- It **MUST** be stored separately from the ContributionRecord ledger: in a separate credit register, held by the coordinator, that maps `contributor_ref` to `credit_display_name` and is not part of the public ledger. It **MUST NOT** be added as a field of a ContributionRecord or an Event, and it **MUST NOT** replace or be derived from `contributor_ref` (§4.1).
+- It **MUST NOT** be an email address, phone number, third-party account identifier, or other contact detail, and providing one **MUST NOT** be a condition for participating or for having contributions recorded.
+- **Revocation**: when a contributor withdraws their display name, it **MUST** be removed from the credit register and from all future lists, and **SHOULD** be removed from already-published lists wherever the publishing medium allows. This deletion applies to the credit register only; the append-only rules for ContributionRecords (§5.5) are unaffected, because the ledger never held the name.
+- Changing or withdrawing a display name **MUST NOT** change the contributor's `contributor_ref` or any ContributionRecord.
+
+### 6.3 Other non-ranking feedback
+
+Recognition **MUST** stay qualitative and non-ranking. Within that constraint the following **MAY** be offered; none of them is designed in detail (§7):
+
+- **Private history view** (already permitted in §6): a contributor can see their own records, rework, and the "where this data was used" notes for batches they worked on.
+- **Opt-in contributor profile**: a public page under the contributor's `credit_display_name` listing the Actions and tracks they took part in. It **MUST NOT** show cross-track totals, quality ratios, or comparisons with other contributors, and it is removed on request under the same rule as §6.2.
+- **Barnstar-style honours**: a short, specific, written appreciation given by one person (a coordinator, requester, or fellow contributor) to another, for example "careful arbitration on batch 3". The term comes from a Wikipedia community practice (`TODO: unverified`; not checked against primary sources here). Such honours **MUST NOT** carry levels, point values, or counts, **MUST NOT** be awarded automatically from activity thresholds (an automatic threshold is a hidden score), and **MUST NOT** be used to rank or select contributors.
+
+All recognition here is acknowledgement, not entitlement: it **MUST NOT** have any redeemable value (§8). Whether it is enough to sustain participation is **unknown** and is tested by falsification condition 9 in `docs/RESOURCE_HYPOTHESIS.md`.
+
 ---
 
 ## 7. Deferred / Unknown / Blocked
 
-**Deferred**: the ledger interface, participants' private views, contribution export formats, cross-Action contribution aggregation, the concrete form of honours/acknowledgements.
+**Deferred**: the ledger interface, participants' private views, contribution export formats, cross-Action contribution aggregation, the detailed format of acknowledgement lists, contributor profiles and honours (the direction and constraints are set in §6.1–§6.3; no list has been published).
 
-**Unknown**: whether non-score incentives are enough to sustain participation (no participants, no data); a reasonable minimum sample size for quality evidence; whether the collection method for impact evidence is feasible; the Sybil resistance of pseudonymous identifiers.
+**Unknown**: whether the non-score recognition in §6.1–§6.3 is enough to sustain participation (no participants, no data; tested by falsification condition 9 in `docs/RESOURCE_HYPOTHESIS.md`); a reasonable minimum sample size for quality evidence; whether the collection method for impact evidence is feasible; the Sybil resistance of pseudonymous identifiers.
 
 **Blocked**: Track R (no real requester); Track S (no institutional contact); impact evidence (no real results and no beneficiaries); any real accounting (no ledger, no participants).
 
